@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using TaskSchedule.Api.Contracts.Auth;
+using TaskSchedule.Api.Infrastructure.Identity;
 
 namespace TaskSchedule.Api.Features.Auth;
 
@@ -12,17 +14,26 @@ public class AuthController : ControllerBase
     [HttpGet("me")]
     [Authorize]
     [ProducesResponseType(typeof(CurrentUserResponse), StatusCodes.Status200OK)]
-    public IActionResult Me()
+    public async Task<IActionResult> Me([FromServices] UserManager<ApplicationUser> userManager)
     {
-        var roles = User.Claims
-            .Where(x => x.Type == ClaimTypes.Role)
-            .Select(x => x.Value)
-            .ToArray();
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await userManager.FindByIdAsync(userId);
+        if (user is null)
+        {
+            return Unauthorized();
+        }
+
+        var roles = await userManager.GetRolesAsync(user);
 
         var response = new CurrentUserResponse(
-            User.FindFirstValue(ClaimTypes.NameIdentifier),
-            User.FindFirstValue(ClaimTypes.Email),
-            User.FindFirstValue(ClaimTypes.Name),
+            user.Id.ToString(),
+            user.Email,
+            user.DisplayName,
             User.Identity?.IsAuthenticated ?? false,
             roles);
 

@@ -29,7 +29,13 @@ builder.Services.AddAuthentication(options =>
     options.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
     options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
     options.DefaultScheme = IdentityConstants.BearerScheme;
-}).AddBearerToken(IdentityConstants.BearerScheme);
+})
+.AddBearerToken(IdentityConstants.BearerScheme)
+.AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? string.Empty;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
+});
 
 builder.Services.AddAuthorization();
 
