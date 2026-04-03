@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 
 const guestNavItems = [
   ['/', 'Home'],
-  ['/login', 'Login'],
-  ['/register', 'Register'],
 ] as const;
 
 const providerNavItems = [
@@ -63,8 +61,11 @@ export function AppLayout() {
     <div className="min-h-screen bg-slate-950 text-slate-100">
       <header className="sticky top-0 z-20 border-b border-slate-800 bg-slate-950/90 backdrop-blur">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
-          <div>
-            <strong className="text-lg font-semibold text-white">Task Schedule</strong>
+          <div className="space-y-1">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-medium text-blue-200">
+              Demo MVP
+            </div>
+            <strong className="block text-lg font-semibold text-white">Task Schedule</strong>
             <p className="text-sm text-slate-400">Freelancer scheduling platform</p>
           </div>
           <div className="flex flex-col gap-3 lg:items-end">
@@ -84,7 +85,7 @@ export function AppLayout() {
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-800 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-800 bg-slate-900/80 px-3 py-2 text-sm text-slate-300 shadow-lg shadow-black/10">
               {user ? (
                 <>
                   <span className="text-slate-200">{user.displayName ?? user.email}</span>
