@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using TaskSchedule.Api.Contracts.Identity;
+using TaskSchedule.Api.Infrastructure.Auth;
 using TaskSchedule.Api.Infrastructure.Identity;
 
 namespace TaskSchedule.Api.Features.Identity;
@@ -100,7 +104,7 @@ public class IdentityController : ControllerBase
     }
 
     [HttpPost("assign-role")]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
     public async Task<IActionResult> AssignRole(
         [FromBody] AssignRoleRequest request,
         [FromServices] UserManager<ApplicationUser> userManager)
@@ -149,6 +153,124 @@ public class IdentityController : ControllerBase
         return Ok(new
         {
             configured = !string.IsNullOrWhiteSpace(clientId) && !string.IsNullOrWhiteSpace(clientSecret)
+        });
+    }
+
+    [HttpGet("google/login")]
+    [AllowAnonymous]
+    public IActionResult GoogleLogin([FromQuery] string? returnUrl = "/")
+    {
+        var redirectUrl = Url.ActionLink(nameof(GoogleCallback), values: new { returnUrl })!;
+        var properties = new AuthenticationProperties
+        {
+            RedirectUri = redirectUrl
+        };
+
+        return Challenge(properties, GoogleDefaults.AuthenticationScheme);
+    }
+
+    [HttpGet("google/callback")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GoogleCallback(
+        [FromQuery] string? returnUrl,
+        [FromServices] SignInManager<ApplicationUser> signInManager,
+        [FromServices] UserManager<ApplicationUser> userManager)
+    {
+        var externalLoginInfo = await signInManager.GetExternalLoginInfoAsync();
+        if (externalLoginInfo is null)
+        {
+            return BadRequest(new { error = "Failed to load Google login information." });
+        }
+
+        var signInResult = await signInManager.ExternalLoginSignInAsync(
+            externalLoginInfo.LoginProvider,
+            externalLoginInfo.ProviderKey,
+            isPersistent: false,
+            bypassTwoFactor: true);
+
+        if (!signInResult.Succeeded)
+        {
+            var email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return BadRequest(new { error = "Google account email is unavailable." });
+            }
+
+            var user = await userManager.FindByEmailAsync(email);
+            if (user is null)
+            {
+                user = new ApplicationUser
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = email,
+                    Email = email,
+                    DisplayName = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Name) ?? email,
+                    EmailConfirmed = true,
+                    TimeZone = "Asia/Taipei"
+                };
+
+                var createResult = await userManager.CreateAsync(user);
+                if (!createResult.Succeeded)
+                {
+                    return BadRequest(new
+                    {
+                        error = "Failed to create local user for Google login.",
+                        details = createResult.Errors.Select(x => x.Description)
+                    });
+                }
+
+                await userManager.AddToRoleAsync(user, "Client");
+            }
+
+            var linkResult = await userManager.AddLoginAsync(user, externalLoginInfo);
+            if (!linkResult.Succeeded)
+            {
+                return BadRequest(new
+                {
+                    error = "Failed to link Google login.",
+                    details = linkResult.Errors.Select(x => x.Description)
+                });
+            }
+
+            await signInManager.SignInAsync(user, isPersistent: false);
+            var roles = await userManager.GetRolesAsync(user);
+
+            return Ok(new
+            {
+                message = "Google login linked and sign-in succeeded.",
+                returnUrl = returnUrl ?? "/",
+                user.Id,
+                user.Email,
+                user.DisplayName,
+                Roles = roles
+            });
+        }
+
+        var signedInUser = await userManager.GetUserAsync(User);
+        if (signedInUser is null)
+        {
+            var email = externalLoginInfo.Principal.FindFirstValue(ClaimTypes.Email);
+            if (!string.IsNullOrWhiteSpace(email))
+            {
+                signedInUser = await userManager.FindByEmailAsync(email);
+            }
+        }
+
+        if (signedInUser is null)
+        {
+            return Ok(new { message = "Google sign-in succeeded.", returnUrl = returnUrl ?? "/" });
+        }
+
+        var signedInRoles = await userManager.GetRolesAsync(signedInUser);
+
+        return Ok(new
+        {
+            message = "Google sign-in succeeded.",
+            returnUrl = returnUrl ?? "/",
+            signedInUser.Id,
+            signedInUser.Email,
+            signedInUser.DisplayName,
+            Roles = signedInRoles
         });
     }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using TaskSchedule.Api.Infrastructure.Auth;
 using TaskSchedule.Api.Infrastructure.Configuration;
 using TaskSchedule.Api.Infrastructure.Identity;
 using TaskSchedule.Api.Infrastructure.Persistence;
@@ -37,7 +38,12 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? string.Empty;
 });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy(AuthorizationPolicies.AdminOnly, policy => policy.RequireRole("Admin"));
+    options.AddPolicy(AuthorizationPolicies.ProviderOnly, policy => policy.RequireRole("Provider"));
+    options.AddPolicy(AuthorizationPolicies.ClientOnly, policy => policy.RequireRole("Client"));
+});
 
 var app = builder.Build();
 
