@@ -20,6 +20,8 @@ export function AppLayout() {
           <Link to="/schedule">Schedule</Link>
           <Link to="/portfolio">Portfolio</Link>
           <Link to="/providers">Providers</Link>
+          <Link to="/bookings">My Bookings</Link>
+          <Link to="/jobs">My Jobs</Link>
         </nav>
       </header>
 

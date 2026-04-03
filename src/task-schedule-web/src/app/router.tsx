@@ -9,6 +9,8 @@ import { SchedulePage } from '../pages/schedule/SchedulePage';
 import { PortfolioPage } from '../pages/portfolio/PortfolioPage';
 import { ProviderDetailPage } from '../pages/marketplace/ProviderDetailPage';
 import { ProvidersPage } from '../pages/marketplace/ProvidersPage';
+import { ClientBookingsPage } from '../pages/bookings/ClientBookingsPage';
+import { ProviderBookingsPage } from '../pages/bookings/ProviderBookingsPage';
 
 export const router = createBrowserRouter([
   {
@@ -24,6 +26,8 @@ export const router = createBrowserRouter([
       { path: 'portfolio', element: <PortfolioPage /> },
       { path: 'providers', element: <ProvidersPage /> },
       { path: 'providers/:providerId', element: <ProviderDetailPage /> },
+      { path: 'bookings', element: <ClientBookingsPage /> },
+      { path: 'jobs', element: <ProviderBookingsPage /> },
     ],
   },
 ]);
