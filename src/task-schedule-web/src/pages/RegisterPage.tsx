@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import type { RegisterRequest } from '../types/auth';
 
@@ -11,6 +12,7 @@ const initialForm: RegisterRequest = {
 };
 
 export function RegisterPage() {
+  const navigate = useNavigate();
   const [form, setForm] = useState<RegisterRequest>(initialForm);
   const [message, setMessage] = useState('');
 
@@ -18,8 +20,11 @@ export function RegisterPage() {
     event.preventDefault();
     try {
       await api.post('/identity/register', form);
-      setMessage('Register success.');
+      setMessage('Register success. Redirecting to login...');
       setForm(initialForm);
+      setTimeout(() => {
+        navigate('/login');
+      }, 500);
     } catch {
       setMessage('Register failed. Please review API and request payload.');
     }

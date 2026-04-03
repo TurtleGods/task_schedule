@@ -16,7 +16,7 @@ const navItems = [
 ] as const;
 
 export function AppLayout() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
@@ -26,17 +26,45 @@ export function AppLayout() {
             <strong className="text-lg font-semibold text-white">Task Schedule</strong>
             <p className="text-sm text-slate-400">Freelancer scheduling platform</p>
           </div>
-          <nav className="flex flex-wrap gap-2">
-            {navItems.map(([to, label]) => (
-              <Link
-                key={to}
-                to={to}
-                className="rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-200 transition hover:border-blue-500 hover:bg-blue-500/10 hover:text-white"
-              >
-                {label}
-              </Link>
-            ))}
-          </nav>
+          <div className="flex flex-col gap-3 lg:items-end">
+            <nav className="flex flex-wrap gap-2">
+              {navItems.map(([to, label]) => (
+                <Link
+                  key={to}
+                  to={to}
+                  className="rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-200 transition hover:border-blue-500 hover:bg-blue-500/10 hover:text-white"
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-800 bg-slate-900/80 px-3 py-2 text-sm text-slate-300">
+              {user ? (
+                <>
+                  <span className="text-slate-200">{user.displayName ?? user.email}</span>
+                  <span className="text-slate-500">•</span>
+                  <span>{user.roles.join(', ') || 'User'}</span>
+                  <button
+                    type="button"
+                    onClick={logout}
+                    className="ml-2 rounded-xl border border-rose-500/40 px-3 py-1.5 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <span>Guest</span>
+                  <Link to="/login" className="rounded-xl border border-blue-500/40 px-3 py-1.5 text-sm font-medium text-blue-200 transition hover:bg-blue-500/10">
+                    Login
+                  </Link>
+                  <Link to="/register" className="rounded-xl bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-blue-500">
+                    Register
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
         </div>
       </header>
 
