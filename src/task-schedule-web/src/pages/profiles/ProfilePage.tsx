@@ -38,56 +38,76 @@ export function ProfilePage() {
   };
 
   return (
-    <section className="card auth-card">
-      <h1>Profile Editor</h1>
-      <div className="role-switcher">
-        <button type="button" onClick={() => setRole('provider')}>Provider</button>
-        <button type="button" onClick={() => setRole('client')}>Client</button>
+    <section className="grid gap-6">
+      <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
+        <h1 className="text-2xl font-semibold text-white">Profile Editor</h1>
+        <p className="mt-2 text-sm text-slate-400">Manage provider and client profiles used in the demo workflow.</p>
+
+        <div className="mt-6 flex flex-wrap gap-3">
+          <button
+            type="button"
+            onClick={() => setRole('provider')}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'provider' ? 'bg-blue-600 text-white' : 'border border-slate-700 bg-slate-950 text-slate-300 hover:border-blue-500'}`}
+          >
+            Provider
+          </button>
+          <button
+            type="button"
+            onClick={() => setRole('client')}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'client' ? 'bg-blue-600 text-white' : 'border border-slate-700 bg-slate-950 text-slate-300 hover:border-blue-500'}`}
+          >
+            Client
+          </button>
+        </div>
+
+        {role === 'provider' ? (
+          <form onSubmit={saveProvider} className="mt-6 grid gap-4 md:grid-cols-2">
+            <label className="grid gap-2 text-sm text-slate-300">
+              Display name
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.displayName} onChange={(e) => setProviderForm({ ...providerForm, displayName: e.target.value })} />
+            </label>
+            <label className="grid gap-2 text-sm text-slate-300">
+              Headline
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.headline} onChange={(e) => setProviderForm({ ...providerForm, headline: e.target.value })} />
+            </label>
+            <label className="grid gap-2 text-sm text-slate-300 md:col-span-2">
+              Bio
+              <textarea className="min-h-28 rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.bio} onChange={(e) => setProviderForm({ ...providerForm, bio: e.target.value })} />
+            </label>
+            <label className="grid gap-2 text-sm text-slate-300">
+              Service area
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.serviceArea} onChange={(e) => setProviderForm({ ...providerForm, serviceArea: e.target.value })} />
+            </label>
+            <label className="grid gap-2 text-sm text-slate-300">
+              Pricing notes
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.pricingNotes} onChange={(e) => setProviderForm({ ...providerForm, pricingNotes: e.target.value })} />
+            </label>
+            <label className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-300 md:col-span-2">
+              <input type="checkbox" checked={providerForm.isPublished} onChange={(e) => setProviderForm({ ...providerForm, isPublished: e.target.checked })} />
+              Published to marketplace
+            </label>
+            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 md:col-span-2" type="submit">
+              Save Provider Profile
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={saveClient} className="mt-6 grid gap-4 md:grid-cols-2">
+            <label className="grid gap-2 text-sm text-slate-300">
+              Display name
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={clientForm.displayName} onChange={(e) => setClientForm({ ...clientForm, displayName: e.target.value })} />
+            </label>
+            <label className="grid gap-2 text-sm text-slate-300">
+              Company name
+              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={clientForm.companyName} onChange={(e) => setClientForm({ ...clientForm, companyName: e.target.value })} />
+            </label>
+            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 md:col-span-2" type="submit">
+              Save Client Profile
+            </button>
+          </form>
+        )}
+
+        {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
       </div>
-
-      {role === 'provider' ? (
-        <form onSubmit={saveProvider} className="form-grid">
-          <label>
-            Display name
-            <input value={providerForm.displayName} onChange={(e) => setProviderForm({ ...providerForm, displayName: e.target.value })} />
-          </label>
-          <label>
-            Headline
-            <input value={providerForm.headline} onChange={(e) => setProviderForm({ ...providerForm, headline: e.target.value })} />
-          </label>
-          <label>
-            Bio
-            <input value={providerForm.bio} onChange={(e) => setProviderForm({ ...providerForm, bio: e.target.value })} />
-          </label>
-          <label>
-            Service area
-            <input value={providerForm.serviceArea} onChange={(e) => setProviderForm({ ...providerForm, serviceArea: e.target.value })} />
-          </label>
-          <label>
-            Pricing notes
-            <input value={providerForm.pricingNotes} onChange={(e) => setProviderForm({ ...providerForm, pricingNotes: e.target.value })} />
-          </label>
-          <label>
-            <input type="checkbox" checked={providerForm.isPublished} onChange={(e) => setProviderForm({ ...providerForm, isPublished: e.target.checked })} />
-            Published
-          </label>
-          <button type="submit">Save Provider Profile</button>
-        </form>
-      ) : (
-        <form onSubmit={saveClient} className="form-grid">
-          <label>
-            Display name
-            <input value={clientForm.displayName} onChange={(e) => setClientForm({ ...clientForm, displayName: e.target.value })} />
-          </label>
-          <label>
-            Company name
-            <input value={clientForm.companyName} onChange={(e) => setClientForm({ ...clientForm, companyName: e.target.value })} />
-          </label>
-          <button type="submit">Save Client Profile</button>
-        </form>
-      )}
-
-      {message && <p className="form-message">{message}</p>}
     </section>
   );
 }

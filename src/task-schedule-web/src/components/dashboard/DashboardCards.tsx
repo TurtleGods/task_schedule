@@ -40,11 +40,18 @@ export function DashboardCards() {
   ];
 
   return (
-    <div className="dashboard-grid">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
       {cards.map((card) => (
-        <Link key={card.to} to={card.to} className="card dashboard-card-link">
-          <h2>{card.title}</h2>
-          <p>{card.description}</p>
+        <Link
+          key={card.to}
+          to={card.to}
+          className="group rounded-3xl border border-slate-800 bg-slate-900/70 p-6 text-slate-100 shadow-lg shadow-black/10 transition hover:-translate-y-1 hover:border-blue-500/50 hover:bg-slate-900"
+        >
+          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-300 ring-1 ring-blue-500/20">
+            →
+          </div>
+          <h2 className="text-lg font-semibold text-white">{card.title}</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-400 group-hover:text-slate-300">{card.description}</p>
         </Link>
       ))}
     </div>

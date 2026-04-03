@@ -20,26 +20,27 @@ export function LoginPage() {
         roles: response.data.roles ?? [],
       });
       setMessage('Login success.');
-    } catch (error) {
+    } catch {
       setMessage('Login failed. Please check API availability and credentials.');
     }
   };
 
   return (
-    <section className="card auth-card">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit} className="form-grid">
-        <label>
+    <section className="mx-auto w-full max-w-xl rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
+      <h1 className="text-2xl font-semibold text-white">Login</h1>
+      <p className="mt-2 text-sm text-slate-400">Sign in with your account to continue the demo flow.</p>
+      <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+        <label className="grid gap-2 text-sm text-slate-300">
           Email
-          <input value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
         </label>
-        <label>
+        <label className="grid gap-2 text-sm text-slate-300">
           Password
-          <input type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
         </label>
-        <button type="submit">Login</button>
+        <button className="mt-2 rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500" type="submit">Login</button>
       </form>
-      {message && <p className="form-message">{message}</p>}
+      {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
     </section>
   );
 }
