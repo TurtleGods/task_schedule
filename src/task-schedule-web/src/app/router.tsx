@@ -7,6 +7,8 @@ import { RegisterPage } from '../pages/RegisterPage';
 import { ProfilePage } from '../pages/profiles/ProfilePage';
 import { SchedulePage } from '../pages/schedule/SchedulePage';
 import { PortfolioPage } from '../pages/portfolio/PortfolioPage';
+import { ProviderDetailPage } from '../pages/marketplace/ProviderDetailPage';
+import { ProvidersPage } from '../pages/marketplace/ProvidersPage';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +22,8 @@ export const router = createBrowserRouter([
       { path: 'profile', element: <ProfilePage /> },
       { path: 'schedule', element: <SchedulePage /> },
       { path: 'portfolio', element: <PortfolioPage /> },
+      { path: 'providers', element: <ProvidersPage /> },
+      { path: 'providers/:providerId', element: <ProviderDetailPage /> },
     ],
   },
 ]);
