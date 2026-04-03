@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TaskSchedule.Api.Contracts.Identity;
+using TaskSchedule.Api.Domain.Entities;
 using TaskSchedule.Api.Infrastructure.Auth;
 using TaskSchedule.Api.Infrastructure.Identity;
+using TaskSchedule.Api.Infrastructure.Persistence;
 
 namespace TaskSchedule.Api.Features.Identity;
 
@@ -20,7 +23,8 @@ public class IdentityController : ControllerBase
     [AllowAnonymous]
     public async Task<IActionResult> Register(
         [FromBody] RegisterRequest request,
-        [FromServices] UserManager<ApplicationUser> userManager)
+        [FromServices] UserManager<ApplicationUser> userManager,
+        [FromServices] ApplicationDbContext dbContext)
     {
         if (!AllowedRoles.Contains(request.Role))
         {
@@ -62,6 +66,28 @@ public class IdentityController : ControllerBase
                 details = addRoleResult.Errors.Select(x => x.Description)
             });
         }
+
+        if (request.Role == "Provider")
+        {
+            dbContext.ProviderProfiles.Add(new ProviderProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                DisplayName = request.DisplayName,
+                IsPublished = false,
+            });
+        }
+        else if (request.Role == "Client")
+        {
+            dbContext.ClientProfiles.Add(new ClientProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                DisplayName = request.DisplayName,
+            });
+        }
+
+        await dbContext.SaveChangesAsync();
 
         return Ok(new
         {
@@ -107,7 +133,8 @@ public class IdentityController : ControllerBase
     [Authorize(Policy = AuthorizationPolicies.AdminOnly)]
     public async Task<IActionResult> AssignRole(
         [FromBody] AssignRoleRequest request,
-        [FromServices] UserManager<ApplicationUser> userManager)
+        [FromServices] UserManager<ApplicationUser> userManager,
+        [FromServices] ApplicationDbContext dbContext)
     {
         if (!Guid.TryParse(request.UserId, out var userId))
         {
@@ -139,6 +166,29 @@ public class IdentityController : ControllerBase
                 details = result.Errors.Select(x => x.Description)
             });
         }
+
+        if (request.Role == "Provider" && !await dbContext.ProviderProfiles.AnyAsync(x => x.UserId == user.Id))
+        {
+            dbContext.ProviderProfiles.Add(new ProviderProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                DisplayName = user.DisplayName ?? user.Email ?? "Provider",
+                IsPublished = false,
+            });
+        }
+
+        if (request.Role == "Client" && !await dbContext.ClientProfiles.AnyAsync(x => x.UserId == user.Id))
+        {
+            dbContext.ClientProfiles.Add(new ClientProfile
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                DisplayName = user.DisplayName ?? user.Email ?? "Client",
+            });
+        }
+
+        await dbContext.SaveChangesAsync();
 
         return Ok(new { message = "Role assigned successfully." });
     }
