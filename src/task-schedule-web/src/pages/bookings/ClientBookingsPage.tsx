@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../../services/api';
 
 type Booking = {
@@ -12,8 +13,9 @@ type Booking = {
 };
 
 export function ClientBookingsPage() {
+  const [searchParams] = useSearchParams();
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(searchParams.get('created') === '1' ? 'Booking created successfully.' : '');
 
   useEffect(() => {
     const load = async () => {

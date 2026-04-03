@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../../services/api';
 
 type PortfolioItem = {
@@ -30,6 +30,7 @@ type ProviderDetail = {
 };
 
 export function ProviderDetailPage() {
+  const navigate = useNavigate();
   const { providerId } = useParams();
   const [provider, setProvider] = useState<ProviderDetail | null>(null);
   const [message, setMessage] = useState('');
@@ -59,7 +60,7 @@ export function ProviderDetailPage() {
   const createBooking = async (availabilitySlotId: string) => {
     try {
       await api.post('/bookings', { availabilitySlotId, notes: '' });
-      setBookingMessage('Booking created successfully.');
+      navigate('/bookings?created=1');
     } catch {
       setBookingMessage('Failed to create booking.');
     }

@@ -1,6 +1,8 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthContext';
 
+import { useEffect, useState } from 'react';
+
 const guestNavItems = [
   ['/', 'Home'],
   ['/login', 'Login'],
@@ -27,6 +29,27 @@ const clientNavItems = [
 
 export function AppLayout() {
   const { user, logout } = useAuth();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const loadNotifications = async () => {
+      if (!user) {
+        setUnreadCount(0);
+        return;
+      }
+
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5112/api'}/notifications/me`);
+        if (!response.ok) return;
+        const notifications = await response.json();
+        setUnreadCount((notifications ?? []).filter((item: { isRead: boolean }) => !item.isRead).length);
+      } catch {
+        // keep silent in layout
+      }
+    };
+
+    void loadNotifications();
+  }, [user]);
 
   const navItems = !user
     ? guestNavItems
@@ -50,9 +73,14 @@ export function AppLayout() {
                 <Link
                   key={to}
                   to={to}
-                  className="rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-200 transition hover:border-blue-500 hover:bg-blue-500/10 hover:text-white"
+                  className="relative rounded-full border border-slate-700 px-3 py-1.5 text-sm text-slate-200 transition hover:border-blue-500 hover:bg-blue-500/10 hover:text-white"
                 >
                   {label}
+                  {to === '/notifications' && unreadCount > 0 && (
+                    <span className="ml-2 inline-flex min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                      {unreadCount}
+                    </span>
+                  )}
                 </Link>
               ))}
             </nav>
