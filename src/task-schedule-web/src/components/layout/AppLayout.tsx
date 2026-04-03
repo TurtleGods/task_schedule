@@ -22,6 +22,7 @@ export function AppLayout() {
           <Link to="/providers">Providers</Link>
           <Link to="/bookings">My Bookings</Link>
           <Link to="/jobs">My Jobs</Link>
+          <Link to="/notifications">Notifications</Link>
         </nav>
       </header>
 

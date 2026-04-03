@@ -11,6 +11,7 @@ import { ProviderDetailPage } from '../pages/marketplace/ProviderDetailPage';
 import { ProvidersPage } from '../pages/marketplace/ProvidersPage';
 import { ClientBookingsPage } from '../pages/bookings/ClientBookingsPage';
 import { ProviderBookingsPage } from '../pages/bookings/ProviderBookingsPage';
+import { NotificationsPage } from '../pages/notifications/NotificationsPage';
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
       { path: 'providers/:providerId', element: <ProviderDetailPage /> },
       { path: 'bookings', element: <ClientBookingsPage /> },
       { path: 'jobs', element: <ProviderBookingsPage /> },
+      { path: 'notifications', element: <NotificationsPage /> },
     ],
   },
 ]);
