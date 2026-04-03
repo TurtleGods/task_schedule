@@ -18,6 +18,7 @@ export function AppLayout() {
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/profile">Profile</Link>
           <Link to="/schedule">Schedule</Link>
+          <Link to="/portfolio">Portfolio</Link>
         </nav>
       </header>
 
