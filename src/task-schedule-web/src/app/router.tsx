@@ -5,6 +5,7 @@ import { HomePage } from '../pages/HomePage';
 import { LoginPage } from '../pages/LoginPage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { ProfilePage } from '../pages/profiles/ProfilePage';
+import { SchedulePage } from '../pages/schedule/SchedulePage';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: 'register', element: <RegisterPage /> },
       { path: 'dashboard', element: <DashboardPage /> },
       { path: 'profile', element: <ProfilePage /> },
+      { path: 'schedule', element: <SchedulePage /> },
     ],
   },
 ]);
