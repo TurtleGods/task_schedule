@@ -1,22 +1,40 @@
 import { Link, Outlet } from 'react-router-dom';
 import { useAuth } from '../../features/auth/AuthContext';
 
-const navItems = [
+const guestNavItems = [
   ['/', 'Home'],
   ['/login', 'Login'],
   ['/register', 'Register'],
+] as const;
+
+const providerNavItems = [
+  ['/', 'Home'],
   ['/dashboard', 'Dashboard'],
   ['/profile', 'Profile'],
   ['/schedule', 'Schedule'],
   ['/portfolio', 'Portfolio'],
+  ['/jobs', 'My Jobs'],
+  ['/notifications', 'Notifications'],
+] as const;
+
+const clientNavItems = [
+  ['/', 'Home'],
+  ['/dashboard', 'Dashboard'],
   ['/providers', 'Providers'],
   ['/bookings', 'My Bookings'],
-  ['/jobs', 'My Jobs'],
   ['/notifications', 'Notifications'],
 ] as const;
 
 export function AppLayout() {
   const { user, logout } = useAuth();
+
+  const navItems = !user
+    ? guestNavItems
+    : user.roles.includes('Provider')
+      ? providerNavItems
+      : user.roles.includes('Client')
+        ? clientNavItems
+        : [['/', 'Home'], ['/dashboard', 'Dashboard'], ['/notifications', 'Notifications']] as const;
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100">
