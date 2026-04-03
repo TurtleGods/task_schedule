@@ -1,0 +1,14 @@
+bin/
+obj/
+.vs/
+.idea/
+.vscode/
+*.user
+*.suo
+*.db
+*.sqlite
+*.log
+src/**/bin/
+src/**/obj/
+tests/**/bin/
+tests/**/obj/
