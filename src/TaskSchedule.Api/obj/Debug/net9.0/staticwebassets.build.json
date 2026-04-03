@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "LPHL+LO2rC4A+4nXg4HWZkbYAa4ZifwwNk2tBrtKHts=",
+  "Source": "TaskSchedule.Api",
+  "BasePath": "_content/TaskSchedule.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
