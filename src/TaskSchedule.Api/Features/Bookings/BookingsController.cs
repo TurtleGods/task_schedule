@@ -54,6 +54,20 @@ public class BookingsController : ControllerBase
 
         slot.IsBooked = true;
         dbContext.Bookings.Add(booking);
+
+        dbContext.Notifications.Add(new Notification
+        {
+            Id = Guid.NewGuid(),
+            UserId = await dbContext.ProviderProfiles
+                .Where(x => x.Id == slot.ProviderProfileId)
+                .Select(x => x.UserId)
+                .FirstAsync(),
+            Type = "booking_created",
+            Message = $"A new booking request was created for slot {slot.StartAt:yyyy-MM-dd HH:mm}.",
+            IsRead = false,
+            CreatedAt = DateTimeOffset.UtcNow,
+        });
+
         await dbContext.SaveChangesAsync();
 
         return Ok(booking);
@@ -131,6 +145,21 @@ public class BookingsController : ControllerBase
                 slot.IsBooked = false;
             }
         }
+
+        var clientUserId = await dbContext.ClientProfiles
+            .Where(x => x.Id == booking.ClientProfileId)
+            .Select(x => x.UserId)
+            .FirstAsync();
+
+        dbContext.Notifications.Add(new Notification
+        {
+            Id = Guid.NewGuid(),
+            UserId = clientUserId,
+            Type = "booking_status_updated",
+            Message = $"Your booking status has been updated to {request.Status}.",
+            IsRead = false,
+            CreatedAt = DateTimeOffset.UtcNow,
+        });
 
         await dbContext.SaveChangesAsync();
         return Ok(booking);

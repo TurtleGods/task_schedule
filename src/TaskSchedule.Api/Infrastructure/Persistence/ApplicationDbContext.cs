@@ -17,6 +17,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
     public DbSet<AvailabilitySlot> AvailabilitySlots => Set<AvailabilitySlot>();
     public DbSet<Booking> Bookings => Set<Booking>();
     public DbSet<PortfolioItem> PortfolioItems => Set<PortfolioItem>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -54,6 +55,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
         {
             entity.HasKey(x => x.Id);
             entity.Property(x => x.Title).HasMaxLength(200);
+        });
+
+        builder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Type).HasMaxLength(100);
+            entity.Property(x => x.Message).HasMaxLength(1000);
+            entity.HasIndex(x => new { x.UserId, x.CreatedAt });
         });
     }
 }
