@@ -137,6 +137,39 @@
 
 ---
 
+## Demo 假資料（Seed Script）
+
+目前已提供一個 SQLite demo seed script：
+
+- `scripts/seed-demo-sqlite.sh`
+
+用途：
+
+- 清除既有 demo.local 假資料
+- 重建 Provider / Client demo 帳號資料
+- 建立 Provider profile / portfolio / availability slots
+- 讓 Client 端可以直接 browse provider 資訊
+
+### 使用方式
+
+```bash
+cd /Users/strollist/.openclaw/workspace
+./scripts/seed-demo-sqlite.sh
+```
+
+### 腳本建立的 demo 資料
+
+會建立：
+
+- Alex Chen
+- Bella Lin
+- Chris Wu
+- Demo Client
+
+> 注意：這份腳本目前是為了 demo browse / flow 驗證而設計，資料會直接寫入 SQLite。
+
+---
+
 ## 本機 Demo 環境
 
 目前本機 demo 採用：
