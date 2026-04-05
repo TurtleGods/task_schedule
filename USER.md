@@ -12,7 +12,7 @@ _Learn about the person you're helping. Update this as you go._
 
 - Prefers a senior software architect/engineer style: structured, concise, practical.
 - Values actionable task breakdowns, scalable system design, clear technical specs, and production-ready implementation guidance.
-- Interested in .NET, Angular, and cloud practices (Azure/GCP).
+- Interested in .NET, Angular, React, and cloud practices (Azure/GCP).
 
 ---
 

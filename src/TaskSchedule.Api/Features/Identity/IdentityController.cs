@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System.Security.Claims;
 using TaskSchedule.Api.Contracts.Identity;
 using TaskSchedule.Api.Domain.Entities;
@@ -208,8 +209,15 @@ public class IdentityController : ControllerBase
 
     [HttpGet("google/login")]
     [AllowAnonymous]
-    public IActionResult GoogleLogin([FromQuery] string? returnUrl = "/")
+    public IActionResult GoogleLogin([FromServices] IConfiguration configuration, [FromQuery] string? returnUrl = "/")
     {
+        var clientId = configuration["Authentication:Google:ClientId"];
+        var clientSecret = configuration["Authentication:Google:ClientSecret"];
+        if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(clientSecret))
+        {
+            return BadRequest(new { error = "Google login is not configured." });
+        }
+
         var redirectUrl = Url.ActionLink(nameof(GoogleCallback), values: new { returnUrl })!;
         var properties = new AuthenticationProperties
         {
