@@ -89,9 +89,8 @@ public class MarketplaceController : ControllerBase
             })
             .ToListAsync();
 
-        var availabilitySlots = await dbContext.AvailabilitySlots
-            .Where(s => s.ProviderProfileId == providerId && !s.IsBooked && s.StartAt >= now)
-            .OrderBy(s => s.StartAt)
+        var availabilitySlots = (await dbContext.AvailabilitySlots
+            .Where(s => s.ProviderProfileId == providerId && !s.IsBooked)
             .Select(s => new
             {
                 s.Id,
@@ -99,7 +98,10 @@ public class MarketplaceController : ControllerBase
                 s.EndAt,
                 s.TimeZone
             })
-            .ToListAsync();
+            .ToListAsync())
+            .Where(s => s.StartAt >= now)
+            .OrderBy(s => s.StartAt)
+            .ToList();
 
         return Ok(new
         {
