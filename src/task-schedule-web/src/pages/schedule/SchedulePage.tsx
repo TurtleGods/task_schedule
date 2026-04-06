@@ -19,6 +19,9 @@ function formatDateTime(value: string) {
 export function SchedulePage() {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingSlotId, setDeletingSlotId] = useState<string | null>(null);
   const [form, setForm] = useState({
     startAt: '',
     endAt: '',
@@ -26,11 +29,14 @@ export function SchedulePage() {
   });
 
   const loadSlots = async () => {
+    setIsLoading(true);
     try {
       const response = await api.get('/schedule/me');
       setSlots(response.data ?? []);
     } catch {
-      setMessage('Failed to load schedule slots.');
+      setMessage('Failed to load schedule slots. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -40,23 +46,29 @@ export function SchedulePage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       await api.post('/schedule/me', form);
       setMessage('Availability slot created.');
       setForm({ startAt: '', endAt: '', timeZone: 'Asia/Taipei' });
       await loadSlots();
     } catch {
-      setMessage('Failed to create availability slot.');
+      setMessage('Failed to create availability slot. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (slotId: string) => {
+    setDeletingSlotId(slotId);
     try {
       await api.delete(`/schedule/me/${slotId}`);
       setMessage('Slot deleted.');
       await loadSlots();
     } catch {
-      setMessage('Failed to delete slot.');
+      setMessage('Failed to delete slot. Please try again.');
+    } finally {
+      setDeletingSlotId(null);
     }
   };
 
@@ -81,7 +93,7 @@ export function SchedulePage() {
             Time zone
             <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={form.timeZone} onChange={(e) => setForm({ ...form, timeZone: e.target.value })} />
           </label>
-          <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500" type="submit">Add Slot</button>
+          <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Adding...' : 'Add Slot'}</button>
         </form>
         {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
       </section>
@@ -95,7 +107,12 @@ export function SchedulePage() {
           <span className="inline-flex w-fit rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">{slots.length} slots</span>
         </div>
 
-        {slots.length === 0 ? (
+        {isLoading ? (
+          <section className="rounded-3xl border border-slate-800 bg-slate-950/50 p-10 text-center">
+            <h3 className="text-xl font-semibold text-white">Loading availability...</h3>
+            <p className="mt-2 text-sm text-slate-400">Fetching your current published and draft schedule slots.</p>
+          </section>
+        ) : slots.length === 0 ? (
           <section className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/50 p-10 text-center">
             <h3 className="text-xl font-semibold text-white">No availability slots yet</h3>
             <p className="mt-2 text-sm text-slate-400">Add your first open slot so clients can start creating booking requests.</p>
@@ -112,8 +129,8 @@ export function SchedulePage() {
                     {slot.isBooked ? 'Booked' : 'Available'}
                   </div>
                 </div>
-                <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10" type="button" onClick={() => handleDelete(slot.id)}>
-                  Delete
+                <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => handleDelete(slot.id)} disabled={deletingSlotId === slot.id}>
+                  {deletingSlotId === slot.id ? 'Deleting...' : 'Delete'}
                 </button>
               </article>
             ))}

@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 export function ProfilePage() {
   const [role, setRole] = useState<'provider' | 'client'>('provider');
   const [message, setMessage] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
   const [providerForm, setProviderForm] = useState({
     displayName: '',
     headline: '',
@@ -19,21 +20,27 @@ export function ProfilePage() {
 
   const saveProvider = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSaving(true);
     try {
       await api.put('/profiles/provider/me', providerForm);
       setMessage('Provider profile saved.');
     } catch {
-      setMessage('Failed to save provider profile.');
+      setMessage('Failed to save provider profile. Please try again.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const saveClient = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSaving(true);
     try {
       await api.put('/profiles/client/me', clientForm);
       setMessage('Client profile saved.');
     } catch {
-      setMessage('Failed to save client profile.');
+      setMessage('Failed to save client profile. Please try again.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -89,8 +96,8 @@ export function ProfilePage() {
               <input type="checkbox" checked={providerForm.isPublished} onChange={(e) => setProviderForm({ ...providerForm, isPublished: e.target.checked })} />
               Published to marketplace
             </label>
-            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 md:col-span-2" type="submit">
-              Save Provider Profile
+            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
+              {isSaving ? 'Saving...' : 'Save Provider Profile'}
             </button>
           </form>
         ) : (
@@ -103,8 +110,8 @@ export function ProfilePage() {
               Company name
               <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={clientForm.companyName} onChange={(e) => setClientForm({ ...clientForm, companyName: e.target.value })} />
             </label>
-            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 md:col-span-2" type="submit">
-              Save Client Profile
+            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
+              {isSaving ? 'Saving...' : 'Save Client Profile'}
             </button>
           </form>
         )}

@@ -13,6 +13,9 @@ type PortfolioItem = {
 export function PortfolioPage() {
   const [items, setItems] = useState<PortfolioItem[]>([]);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingItemId, setDeletingItemId] = useState<string | null>(null);
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -22,11 +25,14 @@ export function PortfolioPage() {
   });
 
   const loadItems = async () => {
+    setIsLoading(true);
     try {
       const response = await api.get('/portfolio/me');
       setItems(response.data ?? []);
     } catch {
-      setMessage('Failed to load portfolio items.');
+      setMessage('Failed to load portfolio items. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,23 +42,29 @@ export function PortfolioPage() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
     try {
       await api.post('/portfolio/me', form);
       setMessage('Portfolio item created.');
       setForm({ title: '', description: '', imageUrl: '', externalUrl: '', sortOrder: 0 });
       await loadItems();
     } catch {
-      setMessage('Failed to create portfolio item.');
+      setMessage('Failed to create portfolio item. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (itemId: string) => {
+    setDeletingItemId(itemId);
     try {
       await api.delete(`/portfolio/me/${itemId}`);
       setMessage('Portfolio item deleted.');
       await loadItems();
     } catch {
-      setMessage('Failed to delete portfolio item.');
+      setMessage('Failed to delete portfolio item. Please try again.');
+    } finally {
+      setDeletingItemId(null);
     }
   };
 
@@ -85,7 +97,7 @@ export function PortfolioPage() {
             Sort order
             <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" type="number" value={form.sortOrder} onChange={(e) => setForm({ ...form, sortOrder: Number(e.target.value) })} />
           </label>
-          <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500" type="submit">Add Portfolio Item</button>
+          <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Adding...' : 'Add Portfolio Item'}</button>
         </form>
         {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
       </section>
@@ -99,7 +111,12 @@ export function PortfolioPage() {
           <span className="inline-flex w-fit rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">{items.length} items</span>
         </div>
 
-        {items.length === 0 ? (
+        {isLoading ? (
+          <section className="rounded-3xl border border-slate-800 bg-slate-950/50 p-10 text-center">
+            <h3 className="text-xl font-semibold text-white">Loading portfolio...</h3>
+            <p className="mt-2 text-sm text-slate-400">Fetching your latest showcase items and links.</p>
+          </section>
+        ) : items.length === 0 ? (
           <section className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/50 p-10 text-center">
             <h3 className="text-xl font-semibold text-white">No portfolio items yet</h3>
             <p className="mt-2 text-sm text-slate-400">Add examples, links, or project summaries so clients can evaluate your work before booking.</p>
@@ -115,8 +132,8 @@ export function PortfolioPage() {
                   <div className="text-sm text-slate-500">External: {item.externalUrl || 'N/A'}</div>
                   <div className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">Sort: {item.sortOrder}</div>
                 </div>
-                <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10" type="button" onClick={() => handleDelete(item.id)}>
-                  Delete
+                <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => handleDelete(item.id)} disabled={deletingItemId === item.id}>
+                  {deletingItemId === item.id ? 'Deleting...' : 'Delete'}
                 </button>
               </article>
             ))}

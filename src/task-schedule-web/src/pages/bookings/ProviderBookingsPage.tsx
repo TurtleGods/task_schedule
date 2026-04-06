@@ -34,13 +34,18 @@ function formatDateTime(value: string) {
 export function ProviderBookingsPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [message, setMessage] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeAction, setActiveAction] = useState<{ bookingId: string; status: string } | null>(null);
 
   const loadBookings = async () => {
+    setIsLoading(true);
     try {
       const response = await api.get('/bookings/provider/me');
       setBookings(response.data ?? []);
     } catch {
-      setMessage('Failed to load provider bookings.');
+      setMessage('Failed to load provider bookings. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -49,12 +54,15 @@ export function ProviderBookingsPage() {
   }, []);
 
   const updateStatus = async (bookingId: string, status: string) => {
+    setActiveAction({ bookingId, status });
     try {
       await api.put(`/bookings/${bookingId}/status`, { status });
       await loadBookings();
       setMessage('Booking status updated.');
     } catch {
-      setMessage('Failed to update booking status.');
+      setMessage('Failed to update booking status. Please try again.');
+    } finally {
+      setActiveAction(null);
     }
   };
 
@@ -72,7 +80,12 @@ export function ProviderBookingsPage() {
       </div>
       {message && <p className="mb-4 text-sm text-blue-300">{message}</p>}
 
-      {bookings.length === 0 ? (
+      {isLoading ? (
+        <section className="rounded-3xl border border-slate-800 bg-slate-950/50 p-10 text-center">
+          <h2 className="text-xl font-semibold text-white">Loading inbound jobs...</h2>
+          <p className="mt-2 text-sm text-slate-400">Fetching booking requests from your provider workspace.</p>
+        </section>
+      ) : bookings.length === 0 ? (
         <section className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/50 p-10 text-center">
           <h2 className="text-xl font-semibold text-white">No inbound jobs yet</h2>
           <p className="mt-2 text-sm text-slate-400">Once clients start booking your published availability, requests will appear here.</p>
@@ -92,14 +105,14 @@ export function ProviderBookingsPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                <button className="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500" type="button" onClick={() => updateStatus(booking.id, 'confirmed')}>
-                  Confirm
+                <button className="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'confirmed')} disabled={activeAction?.bookingId === booking.id}>
+                  {activeAction?.bookingId === booking.id && activeAction.status === 'confirmed' ? 'Confirming...' : 'Confirm'}
                 </button>
-                <button className="rounded-2xl bg-amber-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-500" type="button" onClick={() => updateStatus(booking.id, 'cancelled')}>
-                  Cancel
+                <button className="rounded-2xl bg-amber-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'cancelled')} disabled={activeAction?.bookingId === booking.id}>
+                  {activeAction?.bookingId === booking.id && activeAction.status === 'cancelled' ? 'Cancelling...' : 'Cancel'}
                 </button>
-                <button className="rounded-2xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500" type="button" onClick={() => updateStatus(booking.id, 'completed')}>
-                  Complete
+                <button className="rounded-2xl bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'completed')} disabled={activeAction?.bookingId === booking.id}>
+                  {activeAction?.bookingId === booking.id && activeAction.status === 'completed' ? 'Completing...' : 'Complete'}
                 </button>
               </div>
             </article>
