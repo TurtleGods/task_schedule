@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { api } from '../services/api';
 import { useAuth } from '../features/auth/AuthContext';
 import type { LoginRequest } from '../types/auth';
@@ -32,21 +32,54 @@ export function LoginPage() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-xl rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
-      <h1 className="text-2xl font-semibold text-white">Login</h1>
-      <p className="mt-2 text-sm text-slate-400">Sign in with your account to continue the demo flow.</p>
-      <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
-        <label className="grid gap-2 text-sm text-slate-300">
-          Email
-          <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        </label>
-        <label className="grid gap-2 text-sm text-slate-300">
-          Password
-          <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
-        </label>
-        <button className="mt-2 rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500" type="submit">Login</button>
-      </form>
-      {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
+    <section className="mx-auto grid w-full max-w-6xl gap-6 xl:grid-cols-[minmax(0,1fr),460px] xl:items-stretch">
+      <section className="rounded-[32px] border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-8 shadow-2xl shadow-black/20 xl:p-10">
+        <div className="inline-flex rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-blue-200">
+          Welcome Back
+        </div>
+        <h1 className="mt-5 text-3xl font-semibold tracking-tight text-white xl:text-4xl">Sign in and continue your booking workflow</h1>
+        <p className="mt-4 max-w-xl text-sm leading-7 text-slate-300">
+          Access your provider or client workspace, manage marketplace activity, and keep your booking pipeline moving from one place.
+        </p>
+
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {[
+            'Track live booking status',
+            'Manage provider and client flows',
+            'Review notifications and next actions',
+          ].map((item) => (
+            <div key={item} className="rounded-3xl border border-slate-800 bg-slate-950/60 p-4 text-sm leading-6 text-slate-300">
+              {item}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[32px] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
+        <h2 className="text-2xl font-semibold text-white">Login</h2>
+        <p className="mt-2 text-sm leading-6 text-slate-400">Sign in with your account to continue the demo flow.</p>
+        <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
+          <label className="grid gap-2 text-sm text-slate-300">
+            Email
+            <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+          </label>
+          <label className="grid gap-2 text-sm text-slate-300">
+            Password
+            <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none ring-0 transition focus:border-blue-500" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+          </label>
+          <button className="mt-2 rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500" type="submit">
+            Login
+          </button>
+        </form>
+        {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
+        <p className="mt-6 text-sm text-slate-400">
+          Need an account?{' '}
+          <Link to="/register" className="font-medium text-blue-300 transition hover:text-blue-200">
+            Create one here
+          </Link>
+          .
+        </p>
+      </section>
     </section>
   );
 }

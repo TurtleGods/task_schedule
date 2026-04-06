@@ -57,10 +57,13 @@ export function PortfolioPage() {
   };
 
   return (
-    <section className="grid gap-6 xl:grid-cols-[380px,minmax(0,1fr)]">
-      <section className="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
-        <h1 className="text-2xl font-semibold text-white">Portfolio Manager</h1>
-        <p className="mt-2 text-sm text-slate-400">Showcase previous work and external links for your provider profile.</p>
+    <section className="grid gap-6 xl:grid-cols-[400px,minmax(0,1fr)]">
+      <section className="rounded-[32px] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
+        <div className="inline-flex rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-blue-200 ring-1 ring-blue-500/20">
+          Showcase Manager
+        </div>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-white">Portfolio Manager</h1>
+        <p className="mt-3 text-sm leading-7 text-slate-400">Showcase previous work, portfolio links, and proof points that help clients trust your profile faster.</p>
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
           <label className="grid gap-2 text-sm text-slate-300">
             Title
@@ -87,30 +90,38 @@ export function PortfolioPage() {
         {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
       </section>
 
-      <section className="rounded-3xl border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
-        <div className="mb-6 flex items-center justify-between">
+      <section className="rounded-[32px] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
+        <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className="text-xl font-semibold text-white">Portfolio Items</h2>
-            <p className="mt-1 text-sm text-slate-400">Organize the work you want clients to see first.</p>
+            <p className="mt-1 text-sm text-slate-400">Organize the work you want clients to see first and keep the showcase concise.</p>
           </div>
-          <span className="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">{items.length} items</span>
+          <span className="inline-flex w-fit rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">{items.length} items</span>
         </div>
-        <div className="grid gap-4">
-          {items.map((item) => (
-            <article key={item.id} className="flex flex-col justify-between gap-4 rounded-3xl border border-slate-800 bg-slate-950/70 p-5 md:flex-row md:items-start">
-              <div className="space-y-2">
-                <strong className="text-white">{item.title}</strong>
-                <div className="text-sm text-slate-400">{item.description}</div>
-                <div className="text-sm text-slate-500">Image: {item.imageUrl || 'N/A'}</div>
-                <div className="text-sm text-slate-500">External: {item.externalUrl || 'N/A'}</div>
-                <div className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">Sort: {item.sortOrder}</div>
-              </div>
-              <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10" type="button" onClick={() => handleDelete(item.id)}>
-                Delete
-              </button>
-            </article>
-          ))}
-        </div>
+
+        {items.length === 0 ? (
+          <section className="rounded-3xl border border-dashed border-slate-700 bg-slate-950/50 p-10 text-center">
+            <h3 className="text-xl font-semibold text-white">No portfolio items yet</h3>
+            <p className="mt-2 text-sm text-slate-400">Add examples, links, or project summaries so clients can evaluate your work before booking.</p>
+          </section>
+        ) : (
+          <div className="grid gap-4">
+            {items.map((item) => (
+              <article key={item.id} className="flex flex-col justify-between gap-4 rounded-[28px] border border-slate-800 bg-slate-950/70 p-5 md:flex-row md:items-start">
+                <div className="space-y-2">
+                  <strong className="text-white">{item.title}</strong>
+                  <div className="text-sm leading-6 text-slate-400">{item.description || 'No description provided.'}</div>
+                  <div className="text-sm text-slate-500">Image: {item.imageUrl || 'N/A'}</div>
+                  <div className="text-sm text-slate-500">External: {item.externalUrl || 'N/A'}</div>
+                  <div className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">Sort: {item.sortOrder}</div>
+                </div>
+                <button className="rounded-2xl border border-rose-500/40 px-4 py-2 text-sm font-medium text-rose-200 transition hover:bg-rose-500/10" type="button" onClick={() => handleDelete(item.id)}>
+                  Delete
+                </button>
+              </article>
+            ))}
+          </div>
+        )}
       </section>
     </section>
   );
