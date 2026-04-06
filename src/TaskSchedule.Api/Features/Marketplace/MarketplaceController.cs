@@ -65,30 +65,6 @@ public class MarketplaceController : ControllerBase
                 x.Bio,
                 x.ServiceArea,
                 x.PricingNotes,
-                portfolioItems = dbContext.PortfolioItems
-                    .Where(p => p.ProviderProfileId == x.Id)
-                    .OrderBy(p => p.SortOrder)
-                    .Select(p => new
-                    {
-                        p.Id,
-                        p.Title,
-                        p.Description,
-                        p.ImageUrl,
-                        p.ExternalUrl,
-                        p.SortOrder
-                    })
-                    .ToList(),
-                availabilitySlots = dbContext.AvailabilitySlots
-                    .Where(s => s.ProviderProfileId == x.Id && !s.IsBooked && s.StartAt >= DateTimeOffset.UtcNow)
-                    .OrderBy(s => s.StartAt)
-                    .Select(s => new
-                    {
-                        s.Id,
-                        s.StartAt,
-                        s.EndAt,
-                        s.TimeZone
-                    })
-                    .ToList()
             })
             .FirstOrDefaultAsync();
 
@@ -97,6 +73,44 @@ public class MarketplaceController : ControllerBase
             return NotFound(new { error = "Provider not found." });
         }
 
-        return Ok(provider);
+        var now = DateTimeOffset.UtcNow;
+
+        var portfolioItems = await dbContext.PortfolioItems
+            .Where(p => p.ProviderProfileId == providerId)
+            .OrderBy(p => p.SortOrder)
+            .Select(p => new
+            {
+                p.Id,
+                p.Title,
+                p.Description,
+                p.ImageUrl,
+                p.ExternalUrl,
+                p.SortOrder
+            })
+            .ToListAsync();
+
+        var availabilitySlots = await dbContext.AvailabilitySlots
+            .Where(s => s.ProviderProfileId == providerId && !s.IsBooked && s.StartAt >= now)
+            .OrderBy(s => s.StartAt)
+            .Select(s => new
+            {
+                s.Id,
+                s.StartAt,
+                s.EndAt,
+                s.TimeZone
+            })
+            .ToListAsync();
+
+        return Ok(new
+        {
+            provider.Id,
+            provider.DisplayName,
+            provider.Headline,
+            provider.Bio,
+            provider.ServiceArea,
+            provider.PricingNotes,
+            portfolioItems,
+            availabilitySlots
+        });
     }
 }
