@@ -15,6 +15,7 @@ namespace TaskSchedule.Api.Features.Bookings;
 public class BookingsController : ControllerBase
 {
     private static readonly HashSet<string> AllowedStatuses = ["pending", "confirmed", "cancelled", "completed"];
+    private static readonly HashSet<string> ClientCancellableStatuses = ["pending", "confirmed"];
 
     [HttpPost]
     [Authorize(Policy = AuthorizationPolicies.ClientOnly)]
@@ -109,6 +110,56 @@ public class BookingsController : ControllerBase
             .ToList();
 
         return Ok(bookings);
+    }
+
+    [HttpPut("{bookingId:guid}/cancel")]
+    [Authorize(Policy = AuthorizationPolicies.ClientOnly)]
+    public async Task<IActionResult> CancelBooking(Guid bookingId, [FromServices] ApplicationDbContext dbContext)
+    {
+        var clientProfile = await GetClientProfileAsync(dbContext);
+        if (clientProfile is null)
+        {
+            return NotFound(new { error = "Client profile not found." });
+        }
+
+        var booking = await dbContext.Bookings
+            .FirstOrDefaultAsync(x => x.Id == bookingId && x.ClientProfileId == clientProfile.Id);
+
+        if (booking is null)
+        {
+            return NotFound(new { error = "Booking not found." });
+        }
+
+        if (!ClientCancellableStatuses.Contains(booking.Status))
+        {
+            return BadRequest(new { error = "Only pending or confirmed bookings can be cancelled." });
+        }
+
+        booking.Status = "cancelled";
+
+        var slot = await dbContext.AvailabilitySlots.FirstOrDefaultAsync(x => x.Id == booking.AvailabilitySlotId);
+        if (slot is not null)
+        {
+            slot.IsBooked = false;
+        }
+
+        var providerUserId = await dbContext.ProviderProfiles
+            .Where(x => x.Id == booking.ProviderProfileId)
+            .Select(x => x.UserId)
+            .FirstAsync();
+
+        dbContext.Notifications.Add(new Notification
+        {
+            Id = Guid.NewGuid(),
+            UserId = providerUserId,
+            Type = "booking_cancelled_by_client",
+            Message = "A client cancelled their booking request.",
+            IsRead = false,
+            CreatedAt = DateTimeOffset.UtcNow,
+        });
+
+        await dbContext.SaveChangesAsync();
+        return Ok(booking);
     }
 
     [HttpPut("{bookingId:guid}/status")]
