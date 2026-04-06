@@ -20,10 +20,11 @@ public class NotificationsController : ControllerBase
             return Unauthorized();
         }
 
-        var notifications = await dbContext.Notifications
+        var notifications = (await dbContext.Notifications
             .Where(x => x.UserId == parsedUserId)
+            .ToListAsync())
             .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
+            .ToList();
 
         return Ok(notifications);
     }

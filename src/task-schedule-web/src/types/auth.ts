@@ -17,4 +17,5 @@ export interface CurrentUser {
   displayName: string | null;
   isAuthenticated: boolean;
   roles: string[];
+  accessToken?: string | null;
 }

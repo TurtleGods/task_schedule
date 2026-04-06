@@ -83,10 +83,11 @@ public class BookingsController : ControllerBase
             return NotFound(new { error = "Client profile not found." });
         }
 
-        var bookings = await dbContext.Bookings
+        var bookings = (await dbContext.Bookings
             .Where(x => x.ClientProfileId == clientProfile.Id)
+            .ToListAsync())
             .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
+            .ToList();
 
         return Ok(bookings);
     }
@@ -101,10 +102,11 @@ public class BookingsController : ControllerBase
             return NotFound(new { error = "Provider profile not found." });
         }
 
-        var bookings = await dbContext.Bookings
+        var bookings = (await dbContext.Bookings
             .Where(x => x.ProviderProfileId == providerProfile.Id)
+            .ToListAsync())
             .OrderByDescending(x => x.CreatedAt)
-            .ToListAsync();
+            .ToList();
 
         return Ok(bookings);
     }

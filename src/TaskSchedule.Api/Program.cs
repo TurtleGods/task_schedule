@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TaskSchedule.Api.Infrastructure.Auth;
 using TaskSchedule.Api.Infrastructure.Configuration;
 using TaskSchedule.Api.Infrastructure.Identity;
@@ -38,13 +41,31 @@ builder.Services
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
+var jwtIssuer = builder.Configuration["Authentication:Jwt:Issuer"] ?? "TaskSchedule.Api";
+var jwtAudience = builder.Configuration["Authentication:Jwt:Audience"] ?? "TaskSchedule.Web";
+var jwtKey = builder.Configuration["Authentication:Jwt:Key"] ?? "task-schedule-demo-secret-key-change-this";
+var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
+
 var authenticationBuilder = builder.Services.AddAuthentication(options =>
 {
-    options.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
-    options.DefaultChallengeScheme = IdentityConstants.BearerScheme;
-    options.DefaultScheme = IdentityConstants.BearerScheme;
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
-.AddBearerToken(IdentityConstants.BearerScheme);
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateIssuerSigningKey = true,
+        ValidateLifetime = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = signingKey,
+        ClockSkew = TimeSpan.FromMinutes(1)
+    };
+});
 
 var googleClientId = builder.Configuration["Authentication:Google:ClientId"];
 var googleClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];

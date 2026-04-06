@@ -20,6 +20,7 @@ export function LoginPage() {
         displayName: response.data.displayName,
         isAuthenticated: true,
         roles: response.data.roles ?? [],
+        accessToken: response.data.accessToken ?? null,
       });
       setMessage('Login success. Redirecting...');
       setTimeout(() => {

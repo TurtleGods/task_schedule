@@ -37,7 +37,9 @@ export function AppLayout() {
       }
 
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5112/api'}/notifications/me`);
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:5112/api'}/notifications/me`, {
+          headers: user.accessToken ? { Authorization: `Bearer ${user.accessToken}` } : undefined,
+        });
         if (!response.ok) return;
         const notifications = await response.json();
         setUnreadCount((notifications ?? []).filter((item: { isRead: boolean }) => !item.isRead).length);

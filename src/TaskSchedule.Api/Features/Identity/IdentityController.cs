@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using TaskSchedule.Api.Contracts.Identity;
 using TaskSchedule.Api.Domain.Entities;
 using TaskSchedule.Api.Infrastructure.Auth;
@@ -104,7 +107,8 @@ public class IdentityController : ControllerBase
     public async Task<IActionResult> Login(
         [FromBody] LoginRequest request,
         [FromServices] SignInManager<ApplicationUser> signInManager,
-        [FromServices] UserManager<ApplicationUser> userManager)
+        [FromServices] UserManager<ApplicationUser> userManager,
+        [FromServices] IConfiguration configuration)
     {
         var user = await userManager.FindByEmailAsync(request.Email);
         if (user is null)
@@ -119,10 +123,35 @@ public class IdentityController : ControllerBase
         }
 
         var roles = await userManager.GetRolesAsync(user);
+        var claims = new List<Claim>
+        {
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new(ClaimTypes.Name, user.DisplayName ?? user.Email ?? user.Id.ToString()),
+            new(ClaimTypes.Email, user.Email ?? string.Empty)
+        };
+
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+
+        var issuer = configuration["Authentication:Jwt:Issuer"] ?? "TaskSchedule.Api";
+        var audience = configuration["Authentication:Jwt:Audience"] ?? "TaskSchedule.Web";
+        var key = configuration["Authentication:Jwt:Key"] ?? "task-schedule-demo-secret-key-change-this";
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
+        var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+        var token = new JwtSecurityToken(
+            issuer: issuer,
+            audience: audience,
+            claims: claims,
+            expires: DateTime.UtcNow.AddHours(8),
+            signingCredentials: credentials);
+
+        var accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
         return Ok(new
         {
             message = "Credentials validated.",
+            accessToken,
+            tokenType = "Bearer",
             user.Id,
             user.Email,
             user.DisplayName,
