@@ -35,45 +35,45 @@ const rolePaths = [
 export function HomePage() {
   return (
     <section className="grid gap-6">
-      <section className="relative overflow-hidden rounded-[32px] border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-950 to-slate-950 p-8 shadow-2xl shadow-black/30 lg:p-12">
-        <div className="absolute inset-y-0 right-0 hidden w-1/3 bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_transparent_60%)] lg:block" />
+      <section className="relative overflow-hidden rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-8 shadow-[0_20px_60px_rgba(14,116,144,0.12)] lg:p-12">
+        <div className="absolute -right-16 top-0 hidden h-64 w-64 rounded-full bg-sky-200/40 blur-3xl lg:block" />
+        <div className="absolute bottom-0 left-0 hidden h-48 w-48 rounded-full bg-cyan-200/40 blur-3xl lg:block" />
         <div className="relative grid gap-8 xl:grid-cols-[minmax(0,1.35fr),380px] xl:items-center">
           <div>
-            <div className="mb-5 inline-flex rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-blue-200">
-              Freelancer Scheduling MVP
+            <div className="mb-5 inline-flex rounded-full border border-sky-200 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 shadow-sm">
+              Friendly Provider Marketplace
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-white lg:text-5xl">
-              Book trusted professionals with clear availability and a workflow that feels product-ready.
+            <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-slate-900 lg:text-5xl">
+              Find the right provider with a brighter, calmer booking experience.
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-300 lg:text-lg">
-              Task Schedule helps providers publish their profile, schedule, and portfolio while clients browse services,
-              reserve open slots, and track booking updates from a clean, modern marketplace experience.
+            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600 lg:text-lg">
+              Task Schedule helps clients discover trusted providers through clean profiles, clear availability, and a marketplace experience that feels open, welcoming, and easy to explore.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/providers" className="rounded-2xl bg-blue-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-blue-500">
+              <Link to="/providers" className="rounded-2xl bg-sky-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-sky-500">
                 Browse Providers
               </Link>
-              <Link to="/register" className="rounded-2xl border border-slate-700 px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-blue-500 hover:bg-blue-500/10">
+              <Link to="/register" className="rounded-2xl border border-sky-200 bg-white px-5 py-3 text-sm font-medium text-sky-700 transition hover:bg-sky-50">
                 Become a Provider
               </Link>
             </div>
           </div>
 
           <div className="grid gap-4">
-            <article className="rounded-3xl border border-blue-500/20 bg-blue-500/10 p-5 shadow-xl shadow-blue-950/10">
-              <div className="text-xs font-medium uppercase tracking-[0.18em] text-blue-200">Marketplace Snapshot</div>
+            <article className="rounded-3xl border border-sky-100 bg-white/90 p-5 shadow-[0_16px_40px_rgba(14,116,144,0.12)]">
+              <div className="text-xs font-medium uppercase tracking-[0.18em] text-sky-700">Marketplace Snapshot</div>
               <div className="mt-4 grid gap-3">
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                  <div className="text-sm font-semibold text-white">3 published providers</div>
-                  <p className="mt-1 text-sm text-slate-400">Browse providers with profile, pricing, and portfolio context.</p>
+                <div className="rounded-2xl border border-slate-100 bg-sky-50/70 p-4">
+                  <div className="text-sm font-semibold text-slate-900">Curated provider discovery</div>
+                  <p className="mt-1 text-sm text-slate-600">Browse provider cards with service area, pricing notes, and profile context at a glance.</p>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                  <div className="text-sm font-semibold text-white">Open booking workflow</div>
-                  <p className="mt-1 text-sm text-slate-400">Reserve available slots and track request status from one dashboard.</p>
+                <div className="rounded-2xl border border-slate-100 bg-emerald-50/70 p-4">
+                  <div className="text-sm font-semibold text-slate-900">Clear booking flow</div>
+                  <p className="mt-1 text-sm text-slate-600">Move from browsing to booking without losing visibility into slot availability.</p>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
-                  <div className="text-sm font-semibold text-white">Notifications built in</div>
-                  <p className="mt-1 text-sm text-slate-400">Keep providers and clients aligned through every booking update.</p>
+                <div className="rounded-2xl border border-slate-100 bg-amber-50/70 p-4">
+                  <div className="text-sm font-semibold text-slate-900">Thoughtful follow-up</div>
+                  <p className="mt-1 text-sm text-slate-600">Notifications and status updates keep both sides aligned after the request is sent.</p>
                 </div>
               </div>
             </article>
@@ -83,22 +83,22 @@ export function HomePage() {
 
       <section className="grid gap-4 md:grid-cols-3">
         {highlights.map((item) => (
-          <article key={item.title} className="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-xl shadow-black/10 transition hover:border-blue-500/20 hover:bg-slate-900">
-            <h2 className="text-lg font-semibold text-white">{item.title}</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-400">{item.description}</p>
+          <article key={item.title} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-[0_12px_32px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_36px_rgba(14,116,144,0.12)]">
+            <h2 className="text-lg font-semibold text-slate-900">{item.title}</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">{item.description}</p>
           </article>
         ))}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
-        {rolePaths.map((path) => (
-          <article key={path.label} className="rounded-[28px] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/10">
-            <div className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-300">
+        {rolePaths.map((path, index) => (
+          <article key={path.label} className={`rounded-[28px] border p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] ${index === 0 ? 'border-sky-100 bg-gradient-to-br from-white to-sky-50' : 'border-cyan-100 bg-gradient-to-br from-white to-cyan-50'}`}>
+            <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 shadow-sm">
               {path.label}
             </div>
-            <h2 className="mt-5 text-2xl font-semibold text-white">{path.title}</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400">{path.description}</p>
-            <Link to={path.to} className="mt-6 inline-flex rounded-2xl border border-blue-500/40 px-4 py-3 text-sm font-medium text-blue-200 transition hover:bg-blue-500/10">
+            <h2 className="mt-5 text-2xl font-semibold text-slate-900">{path.title}</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">{path.description}</p>
+            <Link to={path.to} className="mt-6 inline-flex rounded-2xl border border-sky-200 bg-white px-4 py-3 text-sm font-medium text-sky-700 transition hover:bg-sky-50">
               {path.actionLabel}
             </Link>
           </article>
