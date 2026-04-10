@@ -15,13 +15,13 @@ type Booking = {
 function getStatusClasses(status: string) {
   switch (status) {
     case 'confirmed':
-      return 'bg-emerald-50 text-emerald-700';
+      return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300';
     case 'cancelled':
-      return 'bg-rose-50 text-rose-700';
+      return 'bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300';
     case 'completed':
-      return 'bg-slate-100 text-slate-700';
+      return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
     default:
-      return 'bg-sky-50 text-sky-700';
+      return 'bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300';
   }
 }
 
@@ -61,23 +61,23 @@ export function ClientBookingsPage() {
   };
 
   return (
-    <section className="rounded-[28px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+    <section className="rounded-[28px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700">
+          <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
             Client Workspace
           </div>
-          <h1 className="mt-4 text-2xl font-semibold text-slate-900">My Bookings</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-600">Track every booking request, monitor current status, and cancel requests when plans change.</p>
+          <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">My Bookings</h1>
+          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Track every booking request, monitor current status, and cancel requests when plans change.</p>
         </div>
         <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600">{bookings.length} bookings</span>
       </div>
-      {message && <p className="mb-4 text-sm text-sky-700">{message}</p>}
+      {message && <p className="mb-4 text-sm text-sky-700 dark:text-sky-300">{message}</p>}
 
       {bookings.length === 0 ? (
-        <section className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center">
-          <h2 className="text-xl font-semibold text-slate-900">You haven’t created any bookings yet</h2>
-          <p className="mt-2 text-sm text-slate-600">Browse providers to find an open slot and create your first booking request.</p>
+        <section className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-800/60">
+          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">You haven’t created any bookings yet</h2>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Browse providers to find an open slot and create your first booking request.</p>
           <Link to="/providers" className="mt-6 inline-flex rounded-2xl bg-sky-600 px-4 py-3 text-sm font-medium text-white transition hover:bg-sky-500">
             Browse Providers
           </Link>
@@ -88,12 +88,12 @@ export function ClientBookingsPage() {
             const canCancel = booking.status === 'pending' || booking.status === 'confirmed';
 
             return (
-              <article key={booking.id} className="flex flex-col gap-4 rounded-[28px] border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] xl:flex-row xl:items-center xl:justify-between">
+              <article key={booking.id} className="flex flex-col gap-4 rounded-[28px] border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] xl:flex-row xl:items-center xl:justify-between dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
                 <div>
                   <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-xs font-medium capitalize ${getStatusClasses(booking.status)}`}>
                     {booking.status}
                   </div>
-                  <div className="grid gap-1 text-sm text-slate-600">
+                  <div className="grid gap-1 text-sm text-slate-600 dark:text-slate-300">
                     <div>Slot ID: {booking.availabilitySlotId}</div>
                     <div>Created: {formatDateTime(booking.createdAt)}</div>
                     <div>Notes: {booking.notes || 'No notes added.'}</div>
