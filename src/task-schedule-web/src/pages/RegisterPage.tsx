@@ -32,32 +32,32 @@ export function RegisterPage() {
 
   return (
     <section className="mx-auto grid w-full max-w-6xl gap-6 xl:grid-cols-[460px,minmax(0,1fr)] xl:items-stretch">
-      <section className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
+      <section className="theme-panel rounded-[32px] p-8">
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">Register</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Create a provider or client account for the demo environment.</p>
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
           <label className="grid gap-2 text-sm text-slate-700">
             Display name
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.displayName} onChange={(e) => setForm({ ...form, displayName: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" value={form.displayName} onChange={(e) => setForm({ ...form, displayName: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Email
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Password
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Role
-            <select className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value as RegisterRequest['role'] })}>
+            <select className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" value={form.role} onChange={(e) => setForm({ ...form, role: e.target.value as RegisterRequest['role'] })}>
               <option value="Provider">Provider</option>
               <option value="Client">Client</option>
             </select>
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Time zone
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.timeZone} onChange={(e) => setForm({ ...form, timeZone: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" value={form.timeZone} onChange={(e) => setForm({ ...form, timeZone: e.target.value })} />
           </label>
           <button className="mt-2 rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500" type="submit">
             Register
@@ -73,7 +73,7 @@ export function RegisterPage() {
         </p>
       </section>
 
-      <section className="rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-8 shadow-[0_20px_60px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] xl:p-10">
+      <section className="theme-hero rounded-[32px] p-8 xl:p-10">
         <div className="inline-flex rounded-full border border-sky-200 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 shadow-sm dark:border-slate-700 dark:bg-slate-800/80 dark:text-sky-300">
           Get Started
         </div>
@@ -83,11 +83,11 @@ export function RegisterPage() {
         </p>
 
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
+          <div className="theme-card rounded-3xl p-5">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Provider path</h3>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Set up your profile, publish availability, and manage incoming jobs from one dashboard.</p>
           </div>
-          <div className="rounded-3xl border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
+          <div className="theme-card rounded-3xl p-5">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Client path</h3>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Browse providers, book open slots, and track status updates across the full booking lifecycle.</p>
           </div>

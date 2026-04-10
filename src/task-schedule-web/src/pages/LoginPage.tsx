@@ -33,7 +33,7 @@ export function LoginPage() {
 
   return (
     <section className="mx-auto grid w-full max-w-6xl gap-6 xl:grid-cols-[minmax(0,1fr),460px] xl:items-stretch">
-      <section className="rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-8 shadow-[0_20px_60px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] xl:p-10">
+      <section className="theme-hero rounded-[32px] p-8 xl:p-10">
         <div className="inline-flex rounded-full border border-sky-200 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 shadow-sm dark:border-slate-700 dark:bg-slate-800/80 dark:text-sky-300">
           Welcome Back
         </div>
@@ -48,24 +48,24 @@ export function LoginPage() {
             'Manage provider and client flows',
             'Review notifications and next actions',
           ].map((item) => (
-            <div key={item} className="rounded-3xl border border-slate-100 bg-white p-4 text-sm leading-6 text-slate-600 shadow-[0_12px_32px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
+            <div key={item} className="theme-card rounded-3xl p-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
               {item}
             </div>
           ))}
         </div>
       </section>
 
-      <section className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
+      <section className="theme-panel rounded-[32px] p-8">
         <h2 className="text-2xl font-semibold text-slate-900 dark:text-white">Login</h2>
         <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Sign in with your account to continue the demo flow.</p>
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
           <label className="grid gap-2 text-sm text-slate-700">
             Email
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none ring-0 transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none ring-0 transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Password
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none ring-0 transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 text-slate-900 outline-none ring-0 transition focus:border-sky-400 focus:bg-white dark:text-white dark:focus:bg-slate-900" type="password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
           </label>
           <button className="mt-2 rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500" type="submit">
             Login

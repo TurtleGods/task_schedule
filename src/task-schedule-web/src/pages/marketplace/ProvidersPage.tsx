@@ -42,8 +42,8 @@ export function ProvidersPage() {
 
   return (
     <section className="grid gap-6 xl:grid-cols-[320px,minmax(0,1fr)]">
-      <section className="rounded-[28px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
-        <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
+      <section className="theme-panel rounded-[28px] p-8">
+        <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
           Marketplace Filters
         </div>
         <h1 className="mt-5 text-2xl font-semibold text-slate-900 dark:text-white">Find a provider with confidence</h1>
@@ -51,18 +51,18 @@ export function ProvidersPage() {
         <div className="mt-6 grid gap-4">
           <label className="grid gap-2 text-sm text-slate-700">
             Keyword
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" placeholder="e.g. React, Azure, UI/UX" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+            <input className="theme-input rounded-2xl px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white dark:focus:bg-[#111111]" placeholder="e.g. React, Azure, UI/UX" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Service area
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" placeholder="e.g. Taipei, Remote" value={serviceArea} onChange={(e) => setServiceArea(e.target.value)} />
+            <input className="theme-input rounded-2xl px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white dark:focus:bg-[#111111]" placeholder="e.g. Taipei, Remote" value={serviceArea} onChange={(e) => setServiceArea(e.target.value)} />
           </label>
           <div className="flex flex-wrap gap-3 pt-2">
-            <button className="flex-1 rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => void loadProviders()} disabled={isLoading}>
+            <button className="flex-1 rounded-2xl bg-slate-900 px-4 py-3 font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="button" onClick={() => void loadProviders()} disabled={isLoading}>
               {isLoading ? 'Searching...' : 'Search providers'}
             </button>
             <button
-              className="rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:border-sky-200 hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800"
+              className="theme-card rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:border-black/10 hover:bg-black/[0.03] dark:text-slate-200 dark:hover:bg-white/[0.04]"
               type="button"
               onClick={() => {
                 setKeyword('');
@@ -85,50 +85,50 @@ export function ProvidersPage() {
         {message && <p className="mt-4 text-sm text-rose-600">{message}</p>}
       </section>
 
-      <section className="rounded-[28px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
+      <section className="theme-panel rounded-[28px] p-8">
         <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:bg-slate-800 dark:text-sky-300">
+            <div className="inline-flex rounded-full bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:bg-white/[0.05] dark:text-slate-300">
               Published Providers
             </div>
             <h2 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">Browse available specialists</h2>
             <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Open a provider profile to review their work, compare service notes, and find an available slot that fits your timing.</p>
           </div>
-          <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600">{providers.length} results</span>
+          <span className="theme-muted inline-flex w-fit rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{providers.length} results</span>
         </div>
 
         {isLoading ? (
-          <section className="rounded-3xl border border-slate-100 bg-sky-50/60 p-10 text-center dark:border-slate-800 dark:bg-slate-800/70">
+          <section className="theme-muted rounded-3xl p-10 text-center">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Loading providers...</h3>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Fetching the latest published provider list for the marketplace.</p>
           </section>
         ) : providers.length === 0 ? (
-          <section className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-800/60">
+          <section className="theme-muted rounded-3xl border-dashed p-10 text-center">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No providers found</h3>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Try broadening your keyword or removing the service area filter.</p>
           </section>
         ) : (
           <div className="grid gap-4 md:grid-cols-2">
             {providers.map((provider, index) => (
-              <article key={provider.id} className="rounded-[28px] border border-slate-100 bg-white p-6 shadow-[0_12px_32px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_36px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)] dark:hover:border-sky-500 dark:hover:shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
+              <article key={provider.id} className="theme-card rounded-[28px] p-6 transition hover:-translate-y-0.5 hover:border-black/10 hover:shadow-[0_1px_2px_rgba(15,23,42,0.03),0_16px_32px_rgba(15,23,42,0.05)] dark:hover:border-white/12 dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.35),0_16px_32px_rgba(0,0,0,0.28)]">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <div className={`mb-4 inline-flex rounded-full px-3 py-1 text-xs font-medium ${index % 3 === 0 ? 'bg-sky-50 text-sky-700' : index % 3 === 1 ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-700'}`}>
+                    <div className={`mb-4 inline-flex rounded-full px-3 py-1 text-xs font-medium ${index % 3 === 0 ? 'bg-black/[0.04] text-slate-600 dark:bg-white/[0.05] dark:text-slate-300' : index % 3 === 1 ? 'bg-black/[0.055] text-slate-700 dark:bg-white/[0.07] dark:text-slate-200' : 'bg-black/[0.045] text-slate-600 dark:bg-white/[0.06] dark:text-slate-300'}`}>
                       {provider.serviceArea || 'Service area TBD'}
                     </div>
                     <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{provider.displayName}</h3>
                     <p className="mt-2 text-sm text-slate-700 dark:text-slate-300">{provider.headline || 'No headline yet.'}</p>
                   </div>
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-sky-100 bg-sky-50 text-base font-semibold text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-black/8 bg-black/[0.03] text-base font-semibold text-slate-700 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200">
                     {provider.displayName.slice(0, 1).toUpperCase()}
                   </div>
                 </div>
                 <p className="mt-4 min-h-[72px] text-sm leading-6 text-slate-600 line-clamp-3 dark:text-slate-300">{provider.bio || 'No provider bio yet.'}</p>
-                <div className="mt-5 rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+                <div className="theme-muted mt-5 rounded-2xl px-4 py-3 text-sm text-slate-700 dark:text-slate-200">
                   <div className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Pricing</div>
                   <div className="mt-2">{provider.pricingNotes || 'Not specified yet.'}</div>
                 </div>
-                <Link to={`/providers/${provider.id}`} className="mt-6 inline-flex rounded-2xl border border-sky-200 bg-white px-4 py-3 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:text-sky-300 dark:hover:bg-slate-800">
+                <Link to={`/providers/${provider.id}`} className="mt-6 inline-flex rounded-2xl border border-black/8 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:bg-[#171717] dark:text-slate-200 dark:hover:bg-white/[0.04]">
                   View provider detail
                 </Link>
               </article>

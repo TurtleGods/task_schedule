@@ -35,45 +35,45 @@ const rolePaths = [
 export function HomePage() {
   return (
     <section className="grid gap-6">
-      <section className="relative overflow-hidden rounded-[32px] border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-cyan-50 p-8 shadow-[0_20px_60px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:from-slate-900 dark:via-slate-900 dark:to-slate-950 dark:shadow-[0_20px_60px_rgba(0,0,0,0.35)] lg:p-12">
-        <div className="absolute -right-16 top-0 hidden h-64 w-64 rounded-full bg-sky-200/40 blur-3xl lg:block" />
-        <div className="absolute bottom-0 left-0 hidden h-48 w-48 rounded-full bg-cyan-200/40 blur-3xl lg:block" />
+      <section className="theme-hero relative overflow-hidden rounded-[32px] p-8 lg:p-12">
+        <div className="absolute -right-16 top-0 hidden h-64 w-64 rounded-full bg-black/4 blur-3xl lg:block dark:bg-white/5" />
+        <div className="absolute bottom-0 left-0 hidden h-48 w-48 rounded-full bg-black/3 blur-3xl lg:block dark:bg-white/4" />
         <div className="relative grid gap-8 xl:grid-cols-[minmax(0,1.35fr),380px] xl:items-center">
           <div>
-            <div className="mb-5 inline-flex rounded-full border border-sky-200 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 shadow-sm dark:border-slate-700 dark:bg-slate-800/80 dark:text-sky-300">
+            <div className="mb-5 inline-flex rounded-full border border-black/8 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-700 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
               Friendly Provider Marketplace
             </div>
-            <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-slate-900 dark:text-white lg:text-5xl">
+            <h1 className="max-w-4xl text-4xl font-semibold leading-tight text-slate-950 dark:text-white lg:text-5xl">
               Find the right provider with a brighter, calmer booking experience.
             </h1>
-            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-600 dark:text-slate-300 lg:text-lg">
+            <p className="mt-5 max-w-3xl text-base leading-7 text-slate-700 dark:text-slate-300 lg:text-lg">
               Task Schedule helps clients discover trusted providers through clean profiles, clear availability, and a marketplace experience that feels open, welcoming, and easy to explore.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/providers" className="rounded-2xl bg-sky-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-sky-500">
+              <Link to="/providers" className="rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
                 Browse Providers
               </Link>
-              <Link to="/register" className="rounded-2xl border border-sky-200 bg-white px-5 py-3 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:text-sky-300 dark:hover:bg-slate-800">
+              <Link to="/register" className="rounded-2xl border border-black/8 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:bg-[#171717] dark:text-slate-200 dark:hover:bg-white/[0.04]">
                 Become a Provider
               </Link>
             </div>
           </div>
 
           <div className="grid gap-4">
-            <article className="rounded-3xl border border-sky-100 bg-white/90 p-5 shadow-[0_16px_40px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:bg-slate-900/90 dark:shadow-[0_16px_40px_rgba(0,0,0,0.3)]">
-              <div className="text-xs font-medium uppercase tracking-[0.18em] text-sky-700">Marketplace Snapshot</div>
+            <article className="theme-panel rounded-3xl bg-white/80 p-5 dark:bg-[#171717]/90">
+              <div className="text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:text-slate-400">Marketplace Snapshot</div>
               <div className="mt-4 grid gap-3">
-                <div className="rounded-2xl border border-slate-100 bg-sky-50/70 p-4">
-                  <div className="text-sm font-semibold text-slate-900 dark:text-white">Curated provider discovery</div>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Browse provider cards with service area, pricing notes, and profile context at a glance.</p>
+                <div className="theme-muted rounded-2xl p-4">
+                  <div className="text-sm font-semibold text-slate-950 dark:text-white">Curated provider discovery</div>
+                  <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">Browse provider cards with service area, pricing notes, and profile context at a glance.</p>
                 </div>
-                <div className="rounded-2xl border border-slate-100 bg-emerald-50/70 p-4">
-                  <div className="text-sm font-semibold text-slate-900 dark:text-white">Clear booking flow</div>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Move from browsing to booking without losing visibility into slot availability.</p>
+                <div className="theme-muted rounded-2xl p-4">
+                  <div className="text-sm font-semibold text-slate-950 dark:text-white">Clear booking flow</div>
+                  <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">Move from browsing to booking without losing visibility into slot availability.</p>
                 </div>
-                <div className="rounded-2xl border border-slate-100 bg-amber-50/70 p-4">
-                  <div className="text-sm font-semibold text-slate-900 dark:text-white">Thoughtful follow-up</div>
-                  <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Notifications and status updates keep both sides aligned after the request is sent.</p>
+                <div className="theme-muted rounded-2xl p-4">
+                  <div className="text-sm font-semibold text-slate-950 dark:text-white">Thoughtful follow-up</div>
+                  <p className="mt-1 text-sm text-slate-700 dark:text-slate-300">Notifications and status updates keep both sides aligned after the request is sent.</p>
                 </div>
               </div>
             </article>
@@ -83,22 +83,22 @@ export function HomePage() {
 
       <section className="grid gap-4 md:grid-cols-3">
         {highlights.map((item) => (
-          <article key={item.title} className="rounded-3xl border border-slate-100 bg-white p-6 shadow-[0_12px_32px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_36px_rgba(14,116,144,0.12)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)] dark:hover:border-sky-500 dark:hover:shadow-[0_16px_36px_rgba(0,0,0,0.35)]">
-            <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{item.title}</h2>
-            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.description}</p>
+          <article key={item.title} className="theme-card rounded-3xl p-6 transition hover:-translate-y-0.5 hover:border-black/10 hover:shadow-[0_1px_2px_rgba(15,23,42,0.03),0_16px_32px_rgba(15,23,42,0.05)] dark:hover:border-white/12 dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.35),0_16px_32px_rgba(0,0,0,0.28)]">
+            <h2 className="text-lg font-semibold text-slate-950 dark:text-white">{item.title}</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-700 dark:text-slate-300">{item.description}</p>
           </article>
         ))}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
         {rolePaths.map((path, index) => (
-          <article key={path.label} className={`rounded-[28px] border p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)] ${index === 0 ? 'border-sky-100 bg-gradient-to-br from-white to-sky-50 dark:from-slate-900 dark:to-slate-800' : 'border-cyan-100 bg-gradient-to-br from-white to-cyan-50 dark:from-slate-900 dark:to-slate-800'}`}>
-            <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 shadow-sm dark:bg-slate-800 dark:text-slate-300">
+          <article key={path.label} className={`theme-panel rounded-[28px] p-8 ${index === 0 ? 'bg-[linear-gradient(180deg,#fcfcfb_0%,#f5f5f3_100%)] dark:bg-[linear-gradient(180deg,#181818_0%,#151515_100%)]' : 'bg-[linear-gradient(180deg,#fbfbfa_0%,#f3f3f1_100%)] dark:bg-[linear-gradient(180deg,#181818_0%,#141414_100%)]'}`}>
+            <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 shadow-sm dark:bg-white/5 dark:text-slate-300">
               {path.label}
             </div>
-            <h2 className="mt-5 text-2xl font-semibold text-slate-900 dark:text-white">{path.title}</h2>
-            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600 dark:text-slate-300">{path.description}</p>
-            <Link to={path.to} className="mt-6 inline-flex rounded-2xl border border-sky-200 bg-white px-4 py-3 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:bg-slate-900 dark:text-sky-300 dark:hover:bg-slate-800">
+            <h2 className="mt-5 text-2xl font-semibold text-slate-950 dark:text-white">{path.title}</h2>
+            <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-700 dark:text-slate-300">{path.description}</p>
+            <Link to={path.to} className="mt-6 inline-flex rounded-2xl border border-black/8 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:bg-[#171717] dark:text-slate-200 dark:hover:bg-white/[0.04]">
               {path.actionLabel}
             </Link>
           </article>

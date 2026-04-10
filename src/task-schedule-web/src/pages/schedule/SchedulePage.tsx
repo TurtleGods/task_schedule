@@ -74,8 +74,8 @@ export function SchedulePage() {
 
   return (
     <section className="grid gap-6 xl:grid-cols-[400px,minmax(0,1fr)]">
-      <section className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
-        <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
+      <section className="theme-panel rounded-[32px] p-8">
+        <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
           Availability Manager
         </div>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900 dark:text-white">Schedule Manager</h1>
@@ -83,56 +83,56 @@ export function SchedulePage() {
         <form onSubmit={handleSubmit} className="mt-6 grid gap-4">
           <label className="grid gap-2 text-sm text-slate-700">
             Start time
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" type="datetime-local" value={form.startAt} onChange={(e) => setForm({ ...form, startAt: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white dark:focus:bg-[#111111]" type="datetime-local" value={form.startAt} onChange={(e) => setForm({ ...form, startAt: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             End time
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" type="datetime-local" value={form.endAt} onChange={(e) => setForm({ ...form, endAt: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white dark:focus:bg-[#111111]" type="datetime-local" value={form.endAt} onChange={(e) => setForm({ ...form, endAt: e.target.value })} />
           </label>
           <label className="grid gap-2 text-sm text-slate-700">
             Time zone
-            <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:bg-slate-900" value={form.timeZone} onChange={(e) => setForm({ ...form, timeZone: e.target.value })} />
+            <input className="theme-input rounded-2xl px-4 py-3 outline-none transition focus:border-slate-400 focus:bg-white dark:focus:bg-[#111111]" value={form.timeZone} onChange={(e) => setForm({ ...form, timeZone: e.target.value })} />
           </label>
-          <button className="rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Adding...' : 'Add Slot'}</button>
+          <button className="rounded-2xl bg-slate-900 px-4 py-3 font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="submit" disabled={isSubmitting}>{isSubmitting ? 'Adding...' : 'Add Slot'}</button>
         </form>
         {message && <p className="mt-4 text-sm text-sky-700 dark:text-sky-300">{message}</p>}
       </section>
 
-      <section className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
+      <section className="theme-panel rounded-[32px] p-8">
         <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <div className="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:bg-slate-800 dark:text-sky-300">
+            <div className="inline-flex rounded-full bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:bg-white/[0.05] dark:text-slate-300">
               Published Availability
             </div>
             <h2 className="mt-4 text-xl font-semibold text-slate-900 dark:text-white">Current Availability</h2>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Review, maintain, and clean up published provider slots for the marketplace.</p>
           </div>
-          <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600">{slots.length} slots</span>
+          <span className="theme-muted inline-flex w-fit rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{slots.length} slots</span>
         </div>
 
         {isLoading ? (
-          <section className="rounded-3xl border border-slate-100 bg-sky-50/60 p-10 text-center dark:border-slate-800 dark:bg-slate-800/70">
+          <section className="theme-muted rounded-3xl p-10 text-center">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Loading availability...</h3>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Fetching your current published and draft schedule slots.</p>
           </section>
         ) : slots.length === 0 ? (
-          <section className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-800/60">
+          <section className="theme-muted rounded-3xl border-dashed p-10 text-center">
             <h3 className="text-xl font-semibold text-slate-900 dark:text-white">No availability slots yet</h3>
             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Add your first open slot so clients can start creating booking requests.</p>
           </section>
         ) : (
           <div className="grid gap-4">
             {slots.map((slot) => (
-              <article key={slot.id} className="flex flex-col justify-between gap-4 rounded-[28px] border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] md:flex-row md:items-center dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
+              <article key={slot.id} className="theme-card flex flex-col justify-between gap-4 rounded-[28px] p-5 md:flex-row md:items-center">
                 <div>
                   <strong className="text-slate-900 dark:text-white">{formatDateTime(slot.startAt)}</strong>
                   <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">End: {formatDateTime(slot.endAt)}</div>
                   <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">Time zone: {slot.timeZone}</div>
-                  <div className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-medium ${slot.isBooked ? 'bg-amber-50 text-amber-700' : 'bg-emerald-50 text-emerald-700'}`}>
+                  <div className={`mt-3 inline-flex rounded-full px-3 py-1 text-xs font-medium ${slot.isBooked ? 'bg-black/[0.06] text-slate-700 dark:bg-white/[0.08] dark:text-slate-200' : 'bg-black/[0.04] text-slate-600 dark:bg-white/[0.05] dark:text-slate-300'}`}>
                     {slot.isBooked ? 'Booked' : 'Available'}
                   </div>
                 </div>
-                <button className="rounded-2xl border border-rose-200 bg-white px-4 py-2 text-sm font-medium text-rose-600 transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-rose-900/50 dark:bg-slate-900 dark:text-rose-300 dark:hover:bg-rose-950/40" type="button" onClick={() => handleDelete(slot.id)} disabled={deletingSlotId === slot.id}>
+                <button className="rounded-2xl border border-black/8 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-[#171717] dark:text-slate-200 dark:hover:bg-white/[0.04]" type="button" onClick={() => handleDelete(slot.id)} disabled={deletingSlotId === slot.id}>
                   {deletingSlotId === slot.id ? 'Deleting...' : 'Delete'}
                 </button>
               </article>
