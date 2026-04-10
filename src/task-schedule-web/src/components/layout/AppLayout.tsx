@@ -64,15 +64,17 @@ export function AppLayout() {
   return (
     <div className="app-shell min-h-screen text-slate-900 transition-colors dark:text-slate-100">
       <header className="app-header sticky top-0 z-20 border-b backdrop-blur transition-colors">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-3 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex min-w-0 flex-col gap-1">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
               Demo MVP
             </div>
-            <strong className="block text-lg font-semibold text-slate-900 dark:text-white">Task Schedule</strong>
-            <p className="text-sm text-slate-500 dark:text-slate-400">{theme === 'bright' ? 'A bright, friendly marketplace for discovering service providers' : 'A darker workspace for focused provider and booking management'}</p>
+            <div className="flex min-w-0 flex-col gap-0.5">
+              <strong className="block text-lg font-semibold text-slate-900 dark:text-white">Task Schedule</strong>
+              <p className="truncate text-sm text-slate-500 dark:text-slate-400">{theme === 'bright' ? 'A bright, friendly marketplace for discovering service providers' : 'A darker workspace for focused provider and booking management'}</p>
+            </div>
           </div>
-          <div className="flex flex-col gap-3 lg:items-end">
+          <div className="flex flex-col gap-2 lg:items-end">
             <div className="flex flex-wrap items-center justify-end gap-2">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Theme</span>
               <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
@@ -91,6 +93,33 @@ export function AppLayout() {
                   Dark
                 </button>
               </div>
+
+              <div className="flex flex-wrap items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+                {user ? (
+                  <>
+                    <span className="text-slate-800 dark:text-white">{user.displayName ?? user.email}</span>
+                    <span className="text-slate-300 dark:text-slate-600">•</span>
+                    <span>{user.roles.join(', ') || 'User'}</span>
+                    <button
+                      type="button"
+                      onClick={logout}
+                      className="rounded-full border border-rose-200 px-3 py-1 text-sm font-medium text-rose-600 transition hover:bg-rose-50 dark:border-rose-900/50 dark:text-rose-300 dark:hover:bg-rose-950/40"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <span>Guest</span>
+                    <Link to="/login" className="rounded-full border border-sky-200 px-3 py-1 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:text-sky-300 dark:hover:bg-slate-800">
+                      Login
+                    </Link>
+                    <Link to="/register" className="rounded-full bg-sky-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-sky-500 dark:bg-sky-500 dark:hover:bg-sky-400">
+                      Register
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
             <nav className="flex flex-wrap gap-2">
               {navItems.map(([to, label]) => (
@@ -108,32 +137,6 @@ export function AppLayout() {
                 </Link>
               ))}
             </nav>
-            <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
-              {user ? (
-                <>
-                  <span className="text-slate-800 dark:text-white">{user.displayName ?? user.email}</span>
-                  <span className="text-slate-300 dark:text-slate-600">•</span>
-                  <span>{user.roles.join(', ') || 'User'}</span>
-                  <button
-                    type="button"
-                    onClick={logout}
-                    className="ml-2 rounded-xl border border-rose-200 px-3 py-1.5 text-sm font-medium text-rose-600 transition hover:bg-rose-50 dark:border-rose-900/50 dark:text-rose-300 dark:hover:bg-rose-950/40"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <span>Guest</span>
-                  <Link to="/login" className="rounded-xl border border-sky-200 px-3 py-1.5 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:text-sky-300 dark:hover:bg-slate-800">
-                    Login
-                  </Link>
-                  <Link to="/register" className="rounded-xl bg-sky-600 px-3 py-1.5 text-sm font-medium text-white transition hover:bg-sky-500 dark:bg-sky-500 dark:hover:bg-sky-400">
-                    Register
-                  </Link>
-                </>
-              )}
-            </div>
           </div>
         </div>
       </header>
