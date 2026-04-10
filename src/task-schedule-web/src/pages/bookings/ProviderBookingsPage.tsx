@@ -67,33 +67,33 @@ export function ProviderBookingsPage() {
   };
 
   return (
-    <section className="rounded-[28px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)] dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_16px_40px_rgba(0,0,0,0.25)]">
+    <section className="theme-panel rounded-[28px] p-8">
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
+          <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
             Provider Workspace
           </div>
           <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">My Jobs</h1>
           <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Manage inbound booking requests, confirm qualified work, and close the loop with clear status updates.</p>
         </div>
-        <span className="inline-flex w-fit rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs text-slate-600">{bookings.length} jobs</span>
+        <span className="theme-muted inline-flex w-fit rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{bookings.length} jobs</span>
       </div>
-      {message && <p className="mb-4 text-sm text-sky-700 dark:text-sky-300">{message}</p>}
+      {message && <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">{message}</p>}
 
       {isLoading ? (
-        <section className="rounded-3xl border border-slate-100 bg-sky-50/60 p-10 text-center dark:border-slate-800 dark:bg-slate-800/70">
+        <section className="theme-muted rounded-3xl p-10 text-center">
           <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Loading inbound jobs...</h2>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Fetching booking requests from your provider workspace.</p>
         </section>
       ) : bookings.length === 0 ? (
-        <section className="rounded-3xl border border-dashed border-slate-200 bg-slate-50 p-10 text-center dark:border-slate-700 dark:bg-slate-800/60">
+        <section className="theme-muted rounded-3xl border-dashed p-10 text-center">
           <h2 className="text-xl font-semibold text-slate-900 dark:text-white">No inbound jobs yet</h2>
           <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Once clients start booking your published availability, requests will appear here.</p>
         </section>
       ) : (
         <div className="grid gap-4">
           {bookings.map((booking) => (
-            <article key={booking.id} className="flex flex-col gap-4 rounded-[28px] border border-slate-100 bg-white p-5 shadow-[0_12px_32px_rgba(15,23,42,0.06)] xl:flex-row xl:items-center xl:justify-between dark:border-slate-800 dark:bg-slate-900 dark:shadow-[0_12px_32px_rgba(0,0,0,0.25)]">
+            <article key={booking.id} className="theme-card flex flex-col gap-4 rounded-[28px] p-5 xl:flex-row xl:items-center xl:justify-between">
               <div>
                 <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-xs font-medium capitalize ${getStatusClasses(booking.status)}`}>
                   {booking.status}
@@ -111,7 +111,7 @@ export function ProviderBookingsPage() {
                 <button className="rounded-2xl bg-amber-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'cancelled')} disabled={activeAction?.bookingId === booking.id}>
                   {activeAction?.bookingId === booking.id && activeAction.status === 'cancelled' ? 'Cancelling...' : 'Cancel'}
                 </button>
-                <button className="rounded-2xl bg-sky-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'completed')} disabled={activeAction?.bookingId === booking.id}>
+                <button className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="button" onClick={() => updateStatus(booking.id, 'completed')} disabled={activeAction?.bookingId === booking.id}>
                   {activeAction?.bookingId === booking.id && activeAction.status === 'completed' ? 'Completing...' : 'Complete'}
                 </button>
               </div>

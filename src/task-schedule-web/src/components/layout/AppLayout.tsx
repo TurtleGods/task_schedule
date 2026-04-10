@@ -66,7 +66,7 @@ export function AppLayout() {
       <header className="app-header sticky top-0 z-20 border-b backdrop-blur transition-colors">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 flex-col gap-1">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200">
               Demo MVP
             </div>
             <div className="flex min-w-0 flex-col gap-0.5">
@@ -77,24 +77,24 @@ export function AppLayout() {
           <div className="flex flex-col gap-2 lg:items-end">
             <div className="flex flex-wrap items-center justify-end gap-2">
               <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Theme</span>
-              <div className="inline-flex rounded-full border border-slate-200 bg-white p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+              <div className="theme-card inline-flex rounded-full p-1 shadow-none">
                 <button
                   type="button"
                   onClick={() => setTheme('bright')}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'bright' ? 'bg-sky-600 text-white' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'bright' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 hover:bg-black/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.06]'}`}
                 >
                   Bright
                 </button>
                 <button
                   type="button"
                   onClick={() => setTheme('dark')}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'dark' ? 'bg-slate-900 text-white dark:bg-sky-600' : 'text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'}`}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'dark' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 hover:bg-black/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.06]'}`}
                 >
                   Dark
                 </button>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300">
+              <div className="theme-card flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5 text-sm text-slate-600 shadow-none dark:text-slate-300">
                 {user ? (
                   <>
                     <span className="text-slate-800 dark:text-white">{user.displayName ?? user.email}</span>
@@ -103,7 +103,7 @@ export function AppLayout() {
                     <button
                       type="button"
                       onClick={logout}
-                      className="rounded-full border border-rose-200 px-3 py-1 text-sm font-medium text-rose-600 transition hover:bg-rose-50 dark:border-rose-900/50 dark:text-rose-300 dark:hover:bg-rose-950/40"
+                      className="rounded-full border border-black/8 px-3 py-1 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/[0.04]"
                     >
                       Logout
                     </button>
@@ -111,10 +111,10 @@ export function AppLayout() {
                 ) : (
                   <>
                     <span>Guest</span>
-                    <Link to="/login" className="rounded-full border border-sky-200 px-3 py-1 text-sm font-medium text-sky-700 transition hover:bg-sky-50 dark:border-slate-700 dark:text-sky-300 dark:hover:bg-slate-800">
+                    <Link to="/login" className="rounded-full border border-black/8 px-3 py-1 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/[0.04]">
                       Login
                     </Link>
-                    <Link to="/register" className="rounded-full bg-sky-600 px-3 py-1 text-sm font-medium text-white transition hover:bg-sky-500 dark:bg-sky-500 dark:hover:bg-sky-400">
+                    <Link to="/register" className="rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
                       Register
                     </Link>
                   </>
@@ -126,7 +126,7 @@ export function AppLayout() {
                 <Link
                   key={to}
                   to={to}
-                  className="relative rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm text-slate-700 shadow-sm transition hover:border-sky-300 hover:bg-sky-50 hover:text-sky-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-sky-500 dark:hover:bg-slate-800 dark:hover:text-sky-300"
+                  className="theme-card relative rounded-full px-3 py-1.5 text-sm text-slate-700 shadow-none transition hover:border-black/10 hover:bg-black/[0.03] dark:text-slate-200 dark:hover:border-white/12 dark:hover:bg-white/[0.04]"
                 >
                   {label}
                   {to === '/notifications' && unreadCount > 0 && (
@@ -143,12 +143,12 @@ export function AppLayout() {
 
       <main className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8">
         {user && (
-          <section className="flex flex-col gap-3 rounded-[28px] border border-sky-200 bg-gradient-to-r from-sky-50 to-cyan-50 px-4 py-4 text-sm text-sky-900 lg:flex-row lg:items-center lg:justify-between dark:border-slate-700 dark:from-slate-900 dark:to-slate-800 dark:text-slate-200">
+          <section className="theme-panel flex flex-col gap-3 rounded-[28px] px-4 py-4 text-sm text-slate-700 lg:flex-row lg:items-center lg:justify-between dark:text-slate-200">
             <div className="flex flex-col gap-1">
               <span className="font-medium text-slate-900 dark:text-white">Signed in as {user.displayName ?? user.email}</span>
               <span className="text-slate-600 dark:text-slate-400">Roles: {user.roles.join(', ') || 'N/A'}</span>
             </div>
-            <div className="rounded-full border border-sky-200 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-sky-700 dark:border-slate-700 dark:bg-slate-900/80 dark:text-sky-300">
+            <div className="rounded-full border border-black/8 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
               Workspace Active
             </div>
           </section>
