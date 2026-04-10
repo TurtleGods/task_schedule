@@ -46,25 +46,25 @@ export function ProfilePage() {
 
   return (
     <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr),320px]">
-      <div className="rounded-[32px] border border-slate-800 bg-slate-900/80 p-8 shadow-2xl shadow-black/20">
-        <div className="inline-flex rounded-full bg-blue-500/10 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-blue-200 ring-1 ring-blue-500/20">
+      <div className="rounded-[32px] border border-sky-100 bg-white p-8 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+        <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-sky-700">
           Profile Manager
         </div>
-        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-white">Profile Editor</h1>
-        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-400">Manage provider and client profile data used in the demo workflow, and keep the public-facing information clean and marketplace-ready.</p>
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-900">Profile Editor</h1>
+        <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-600">Manage provider and client profile data used in the demo workflow, and keep the public-facing information clean and marketplace-ready.</p>
 
         <div className="mt-6 flex flex-wrap gap-3">
           <button
             type="button"
             onClick={() => setRole('provider')}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'provider' ? 'bg-blue-600 text-white' : 'border border-slate-700 bg-slate-950 text-slate-300 hover:border-blue-500'}`}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'provider' ? 'bg-sky-600 text-white' : 'border border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:bg-sky-50'}`}
           >
             Provider
           </button>
           <button
             type="button"
             onClick={() => setRole('client')}
-            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'client' ? 'bg-blue-600 text-white' : 'border border-slate-700 bg-slate-950 text-slate-300 hover:border-blue-500'}`}
+            className={`rounded-full px-4 py-2 text-sm font-medium transition ${role === 'client' ? 'bg-sky-600 text-white' : 'border border-slate-200 bg-white text-slate-700 hover:border-sky-300 hover:bg-sky-50'}`}
           >
             Client
           </button>
@@ -72,58 +72,58 @@ export function ProfilePage() {
 
         {role === 'provider' ? (
           <form onSubmit={saveProvider} className="mt-6 grid gap-4 md:grid-cols-2">
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Display name
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.displayName} onChange={(e) => setProviderForm({ ...providerForm, displayName: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={providerForm.displayName} onChange={(e) => setProviderForm({ ...providerForm, displayName: e.target.value })} />
             </label>
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Headline
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.headline} onChange={(e) => setProviderForm({ ...providerForm, headline: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={providerForm.headline} onChange={(e) => setProviderForm({ ...providerForm, headline: e.target.value })} />
             </label>
-            <label className="grid gap-2 text-sm text-slate-300 md:col-span-2">
+            <label className="grid gap-2 text-sm text-slate-700 md:col-span-2">
               Bio
-              <textarea className="min-h-32 rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.bio} onChange={(e) => setProviderForm({ ...providerForm, bio: e.target.value })} />
+              <textarea className="min-h-32 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={providerForm.bio} onChange={(e) => setProviderForm({ ...providerForm, bio: e.target.value })} />
             </label>
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Service area
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.serviceArea} onChange={(e) => setProviderForm({ ...providerForm, serviceArea: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={providerForm.serviceArea} onChange={(e) => setProviderForm({ ...providerForm, serviceArea: e.target.value })} />
             </label>
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Pricing notes
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={providerForm.pricingNotes} onChange={(e) => setProviderForm({ ...providerForm, pricingNotes: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={providerForm.pricingNotes} onChange={(e) => setProviderForm({ ...providerForm, pricingNotes: e.target.value })} />
             </label>
-            <label className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-950 px-4 py-3 text-sm text-slate-300 md:col-span-2">
+            <label className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700 md:col-span-2">
               <input type="checkbox" checked={providerForm.isPublished} onChange={(e) => setProviderForm({ ...providerForm, isPublished: e.target.checked })} />
               Published to marketplace
             </label>
-            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
+            <button className="rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
               {isSaving ? 'Saving...' : 'Save Provider Profile'}
             </button>
           </form>
         ) : (
           <form onSubmit={saveClient} className="mt-6 grid gap-4 md:grid-cols-2">
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Display name
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={clientForm.displayName} onChange={(e) => setClientForm({ ...clientForm, displayName: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={clientForm.displayName} onChange={(e) => setClientForm({ ...clientForm, displayName: e.target.value })} />
             </label>
-            <label className="grid gap-2 text-sm text-slate-300">
+            <label className="grid gap-2 text-sm text-slate-700">
               Company name
-              <input className="rounded-2xl border border-slate-700 bg-slate-950 px-4 py-3 text-white outline-none transition focus:border-blue-500" value={clientForm.companyName} onChange={(e) => setClientForm({ ...clientForm, companyName: e.target.value })} />
+              <input className="rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-slate-900 outline-none transition focus:border-sky-400 focus:bg-white" value={clientForm.companyName} onChange={(e) => setClientForm({ ...clientForm, companyName: e.target.value })} />
             </label>
-            <button className="rounded-2xl bg-blue-600 px-4 py-3 font-medium text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
+            <button className="rounded-2xl bg-sky-600 px-4 py-3 font-medium text-white transition hover:bg-sky-500 disabled:cursor-not-allowed disabled:opacity-60 md:col-span-2" type="submit" disabled={isSaving}>
               {isSaving ? 'Saving...' : 'Save Client Profile'}
             </button>
           </form>
         )}
 
-        {message && <p className="mt-4 text-sm text-blue-300">{message}</p>}
+        {message && <p className="mt-4 text-sm text-sky-700">{message}</p>}
       </div>
 
-      <aside className="rounded-[32px] border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-black/20">
-        <div className="inline-flex rounded-full bg-slate-800 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-300">
+      <aside className="rounded-[32px] border border-sky-100 bg-gradient-to-br from-white to-sky-50 p-6 shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+        <div className="inline-flex rounded-full bg-white px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 shadow-sm">
           Editing Tips
         </div>
-        <div className="mt-5 space-y-4 text-sm leading-6 text-slate-400">
+        <div className="mt-5 space-y-4 text-sm leading-6 text-slate-600">
           <p>Use concise headlines and service-area copy so marketplace cards stay readable.</p>
           <p>Keep pricing notes simple and scannable for faster provider comparison.</p>
           <p>Publish only when your profile, schedule, and portfolio are ready for client review.</p>
