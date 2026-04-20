@@ -14,13 +14,13 @@ type Booking = {
 function getStatusClasses(status: string) {
   switch (status) {
     case 'confirmed':
-      return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300';
+      return 'theme-status-success';
     case 'cancelled':
-      return 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300';
+      return 'theme-status-warning';
     case 'completed':
-      return 'bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300';
+      return 'theme-status-info';
     default:
-      return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+      return 'theme-status-neutral';
   }
 }
 
@@ -70,25 +70,25 @@ export function ProviderBookingsPage() {
     <section className="theme-panel rounded-[28px] p-8">
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
+          <div className="theme-kicker">
             Provider Workspace
           </div>
-          <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">My Jobs</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Manage inbound booking requests, confirm qualified work, and close the loop with clear status updates.</p>
+          <h1 className="theme-text-primary mt-4 text-2xl font-semibold">My Jobs</h1>
+          <p className="theme-text-secondary mt-2 text-sm leading-6">Manage inbound booking requests, confirm qualified work, and close the loop with clear status updates.</p>
         </div>
-        <span className="theme-muted inline-flex w-fit rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{bookings.length} jobs</span>
+        <span className="theme-muted theme-text-secondary inline-flex w-fit rounded-full px-3 py-1 text-xs">{bookings.length} jobs</span>
       </div>
-      {message && <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">{message}</p>}
+      {message && <p className="theme-text-secondary mb-4 text-sm">{message}</p>}
 
       {isLoading ? (
         <section className="theme-muted rounded-3xl p-10 text-center">
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">Loading inbound jobs...</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Fetching booking requests from your provider workspace.</p>
+          <h2 className="theme-text-primary text-xl font-semibold">Loading inbound jobs...</h2>
+          <p className="theme-text-secondary mt-2 text-sm">Fetching booking requests from your provider workspace.</p>
         </section>
       ) : bookings.length === 0 ? (
         <section className="theme-muted rounded-3xl border-dashed p-10 text-center">
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">No inbound jobs yet</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Once clients start booking your published availability, requests will appear here.</p>
+          <h2 className="theme-text-primary text-xl font-semibold">No inbound jobs yet</h2>
+          <p className="theme-text-secondary mt-2 text-sm">Once clients start booking your published availability, requests will appear here.</p>
         </section>
       ) : (
         <div className="grid gap-4">
@@ -98,20 +98,20 @@ export function ProviderBookingsPage() {
                 <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-xs font-medium capitalize ${getStatusClasses(booking.status)}`}>
                   {booking.status}
                 </div>
-                <div className="space-y-1 text-sm text-slate-600 dark:text-slate-300">
+                <div className="theme-text-secondary space-y-1 text-sm">
                   <div>Slot ID: {booking.availabilitySlotId}</div>
                   <div>Created: {formatDateTime(booking.createdAt)}</div>
                   <div>Notes: {booking.notes || 'No notes provided.'}</div>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
-                <button className="rounded-2xl bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'confirmed')} disabled={activeAction?.bookingId === booking.id}>
+                <button className="theme-button-success disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'confirmed')} disabled={activeAction?.bookingId === booking.id}>
                   {activeAction?.bookingId === booking.id && activeAction.status === 'confirmed' ? 'Confirming...' : 'Confirm'}
                 </button>
-                <button className="rounded-2xl bg-amber-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'cancelled')} disabled={activeAction?.bookingId === booking.id}>
+                <button className="theme-button-warning disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'cancelled')} disabled={activeAction?.bookingId === booking.id}>
                   {activeAction?.bookingId === booking.id && activeAction.status === 'cancelled' ? 'Cancelling...' : 'Cancel'}
                 </button>
-                <button className="rounded-2xl bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="button" onClick={() => updateStatus(booking.id, 'completed')} disabled={activeAction?.bookingId === booking.id}>
+                <button className="theme-button-primary-compact disabled:cursor-not-allowed disabled:opacity-60" type="button" onClick={() => updateStatus(booking.id, 'completed')} disabled={activeAction?.bookingId === booking.id}>
                   {activeAction?.bookingId === booking.id && activeAction.status === 'completed' ? 'Completing...' : 'Complete'}
                 </button>
               </div>

@@ -32,21 +32,21 @@ export function OnboardingChecklist({ user }: OnboardingChecklistProps) {
   return (
     <section className="theme-panel rounded-3xl p-8">
       <div className="mb-6">
-        <div className="inline-flex rounded-full border border-sky-200 bg-sky-50 px-3 py-1 text-xs font-medium text-sky-700 dark:border-slate-700 dark:bg-slate-800 dark:text-sky-300">
+        <div className="theme-accent-soft inline-flex rounded-full px-3 py-1 text-xs font-medium">
           Onboarding Checklist
         </div>
-        <h2 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">Recommended next steps</h2>
-        <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Use this checklist to move through the most important pages in order.</p>
+        <h2 className="theme-text-primary mt-4 text-2xl font-semibold">Recommended next steps</h2>
+        <p className="theme-text-secondary mt-2 text-sm">Use this checklist to move through the most important pages in order.</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         {items.map((item, index) => (
-          <Link key={item.title} to={item.to} className="theme-card rounded-3xl p-5 transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_36px_rgba(14,116,144,0.12)]">
-            <div className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-600 text-sm font-semibold text-white">
+          <Link key={item.title} to={item.to} className="theme-card theme-card-hover rounded-3xl p-5 transition hover:-translate-y-1">
+            <div className="theme-button-primary-compact mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full px-0 py-0 text-sm font-semibold">
               {index + 1}
             </div>
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{item.title}</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.description}</p>
+            <h3 className="theme-text-primary text-lg font-semibold">{item.title}</h3>
+            <p className="theme-text-secondary mt-2 text-sm leading-6">{item.description}</p>
           </Link>
         ))}
       </div>

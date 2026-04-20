@@ -62,48 +62,48 @@ export function AppLayout() {
         : [['/', 'Home'], ['/dashboard', 'Dashboard'], ['/notifications', 'Notifications']] as const;
 
   return (
-    <div className="app-shell min-h-screen text-slate-900 transition-colors dark:text-slate-100">
+    <div className="app-shell min-h-screen theme-text-primary transition-colors">
       <header className="app-header sticky top-0 z-20 border-b backdrop-blur transition-colors">
         <div className="mx-auto flex max-w-7xl flex-col gap-3 px-6 py-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 flex-col gap-1">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-200">
+            <div className="theme-accent-soft inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-medium">
               Demo MVP
             </div>
             <div className="flex min-w-0 flex-col gap-0.5">
-              <strong className="block text-lg font-semibold text-slate-900 dark:text-white">Task Schedule</strong>
-              <p className="truncate text-sm text-slate-500 dark:text-slate-400">{theme === 'bright' ? 'A bright, friendly marketplace for discovering service providers' : 'A darker workspace for focused provider and booking management'}</p>
+              <strong className="theme-text-primary block text-lg font-semibold">Task Schedule</strong>
+              <p className="theme-text-muted truncate text-sm">{theme === 'bright' ? 'A bright, friendly marketplace for discovering service providers' : 'A darker workspace for focused provider and booking management'}</p>
             </div>
           </div>
           <div className="flex flex-col gap-2 lg:items-end">
             <div className="flex flex-wrap items-center justify-end gap-2">
-              <span className="text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Theme</span>
+              <span className="theme-text-muted text-xs font-medium uppercase tracking-[0.18em]">Theme</span>
               <div className="theme-card inline-flex rounded-full p-1 shadow-none">
                 <button
                   type="button"
                   onClick={() => setTheme('bright')}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'bright' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 hover:bg-black/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.06]'}`}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'bright' ? 'theme-button-tab-active' : 'theme-button-tab'}`}
                 >
                   Bright
                 </button>
                 <button
                   type="button"
                   onClick={() => setTheme('dark')}
-                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'dark' ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900' : 'text-slate-600 hover:bg-black/[0.04] dark:text-slate-300 dark:hover:bg-white/[0.06]'}`}
+                  className={`rounded-full px-3 py-1 text-xs font-medium transition ${theme === 'dark' ? 'theme-button-tab-active' : 'theme-button-tab'}`}
                 >
                   Dark
                 </button>
               </div>
 
-              <div className="theme-card flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5 text-sm text-slate-600 shadow-none dark:text-slate-300">
+              <div className="theme-card theme-text-secondary flex flex-wrap items-center gap-2 rounded-full px-3 py-1.5 text-sm shadow-none">
                 {user ? (
                   <>
-                    <span className="text-slate-800 dark:text-white">{user.displayName ?? user.email}</span>
-                    <span className="text-slate-300 dark:text-slate-600">•</span>
+                    <span className="theme-text-primary">{user.displayName ?? user.email}</span>
+                    <span className="theme-text-muted">•</span>
                     <span>{user.roles.join(', ') || 'User'}</span>
                     <button
                       type="button"
                       onClick={logout}
-                      className="rounded-full border border-black/8 px-3 py-1 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/[0.04]"
+                      className="theme-button-outline rounded-full px-3 py-1"
                     >
                       Logout
                     </button>
@@ -111,10 +111,10 @@ export function AppLayout() {
                 ) : (
                   <>
                     <span>Guest</span>
-                    <Link to="/login" className="rounded-full border border-black/8 px-3 py-1 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:text-slate-200 dark:hover:bg-white/[0.04]">
+                    <Link to="/login" className="theme-button-outline rounded-full px-3 py-1">
                       Login
                     </Link>
-                    <Link to="/register" className="rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+                    <Link to="/register" className="theme-button-primary-compact rounded-full px-3 py-1">
                       Register
                     </Link>
                   </>
@@ -126,11 +126,11 @@ export function AppLayout() {
                 <Link
                   key={to}
                   to={to}
-                  className="theme-card relative rounded-full px-3 py-1.5 text-sm text-slate-700 shadow-none transition hover:border-black/10 hover:bg-black/[0.03] dark:text-slate-200 dark:hover:border-white/12 dark:hover:bg-white/[0.04]"
+                  className="theme-card theme-text-secondary relative rounded-full px-3 py-1.5 text-sm shadow-none transition hover:[background:var(--surface-selected)]"
                 >
                   {label}
                   {to === '/notifications' && unreadCount > 0 && (
-                    <span className="ml-2 inline-flex min-w-5 items-center justify-center rounded-full bg-rose-500 px-1.5 py-0.5 text-[10px] font-semibold text-white">
+                    <span className="theme-status-badge ml-2">
                       {unreadCount}
                     </span>
                   )}
@@ -143,12 +143,12 @@ export function AppLayout() {
 
       <main className="mx-auto flex max-w-7xl flex-col gap-6 px-6 py-8">
         {user && (
-          <section className="theme-panel flex flex-col gap-3 rounded-[28px] px-4 py-4 text-sm text-slate-700 lg:flex-row lg:items-center lg:justify-between dark:text-slate-200">
+          <section className="theme-panel theme-text-secondary flex flex-col gap-3 rounded-[28px] px-4 py-4 text-sm lg:flex-row lg:items-center lg:justify-between">
             <div className="flex flex-col gap-1">
-              <span className="font-medium text-slate-900 dark:text-white">Signed in as {user.displayName ?? user.email}</span>
-              <span className="text-slate-600 dark:text-slate-400">Roles: {user.roles.join(', ') || 'N/A'}</span>
+              <span className="theme-text-primary font-medium">Signed in as {user.displayName ?? user.email}</span>
+              <span className="theme-text-muted">Roles: {user.roles.join(', ') || 'N/A'}</span>
             </div>
-            <div className="rounded-full border border-black/8 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
+            <div className="theme-pill rounded-full px-3 py-1 uppercase tracking-[0.18em]">
               Workspace Active
             </div>
           </section>

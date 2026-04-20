@@ -45,13 +45,13 @@ export function DashboardCards() {
         <Link
           key={card.to}
           to={card.to}
-          className="theme-card group rounded-3xl p-6 text-slate-900 transition hover:-translate-y-1 hover:border-sky-200 hover:shadow-[0_16px_36px_rgba(14,116,144,0.12)] dark:text-white"
+          className="theme-card theme-card-hover group rounded-3xl p-6 theme-text-primary transition hover:-translate-y-1"
         >
-          <div className="theme-muted mb-4 flex h-10 w-10 items-center justify-center rounded-2xl text-sky-700 dark:text-sky-300">
+          <div className="theme-accent-soft mb-4 flex h-10 w-10 items-center justify-center rounded-2xl">
             →
           </div>
-          <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{card.title}</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600 group-hover:text-slate-700 dark:text-slate-300 dark:group-hover:text-slate-200">{card.description}</p>
+          <h2 className="text-lg font-semibold">{card.title}</h2>
+          <p className="theme-text-secondary mt-2 text-sm leading-6 group-hover:[color:var(--text-primary)]">{card.description}</p>
         </Link>
       ))}
     </div>

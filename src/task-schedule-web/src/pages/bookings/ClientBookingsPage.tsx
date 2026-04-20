@@ -15,13 +15,13 @@ type Booking = {
 function getStatusClasses(status: string) {
   switch (status) {
     case 'confirmed':
-      return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300';
+      return 'theme-status-success';
     case 'cancelled':
-      return 'bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300';
+      return 'theme-status-danger';
     case 'completed':
-      return 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300';
+      return 'theme-status-neutral';
     default:
-      return 'bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300';
+      return 'theme-status-info';
   }
 }
 
@@ -64,21 +64,21 @@ export function ClientBookingsPage() {
     <section className="theme-panel rounded-[28px] p-8">
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
+          <div className="theme-kicker">
             Client Workspace
           </div>
-          <h1 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">My Bookings</h1>
-          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Track every booking request, monitor current status, and cancel requests when plans change.</p>
+          <h1 className="theme-text-primary mt-4 text-2xl font-semibold">My Bookings</h1>
+          <p className="theme-text-secondary mt-2 text-sm leading-6">Track every booking request, monitor current status, and cancel requests when plans change.</p>
         </div>
-        <span className="theme-muted inline-flex w-fit rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{bookings.length} bookings</span>
+        <span className="theme-muted theme-text-secondary inline-flex w-fit rounded-full px-3 py-1 text-xs">{bookings.length} bookings</span>
       </div>
-      {message && <p className="mb-4 text-sm text-slate-700 dark:text-slate-300">{message}</p>}
+      {message && <p className="theme-text-secondary mb-4 text-sm">{message}</p>}
 
       {bookings.length === 0 ? (
         <section className="theme-muted rounded-3xl border-dashed p-10 text-center">
-          <h2 className="text-xl font-semibold text-slate-900 dark:text-white">You haven’t created any bookings yet</h2>
-          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Browse providers to find an open slot and create your first booking request.</p>
-          <Link to="/providers" className="mt-6 inline-flex rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200">
+          <h2 className="theme-text-primary text-xl font-semibold">You haven’t created any bookings yet</h2>
+          <p className="theme-text-secondary mt-2 text-sm">Browse providers to find an open slot and create your first booking request.</p>
+          <Link to="/providers" className="theme-button-primary mt-6 inline-flex">
             Browse Providers
           </Link>
         </section>
@@ -93,7 +93,7 @@ export function ClientBookingsPage() {
                   <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-xs font-medium capitalize ${getStatusClasses(booking.status)}`}>
                     {booking.status}
                   </div>
-                  <div className="grid gap-1 text-sm text-slate-600 dark:text-slate-300">
+                  <div className="theme-text-secondary grid gap-1 text-sm">
                     <div>Slot ID: {booking.availabilitySlotId}</div>
                     <div>Created: {formatDateTime(booking.createdAt)}</div>
                     <div>Notes: {booking.notes || 'No notes added.'}</div>
@@ -101,7 +101,7 @@ export function ClientBookingsPage() {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {canCancel && (
-                    <button className="rounded-2xl border border-black/8 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-black/[0.03] dark:border-white/10 dark:bg-[#171717] dark:text-slate-200 dark:hover:bg-white/[0.04]" type="button" onClick={() => cancelBooking(booking.id)}>
+                    <button className="theme-button-outline" type="button" onClick={() => cancelBooking(booking.id)}>
                       Cancel Booking
                     </button>
                   )}

@@ -67,11 +67,11 @@ export function ProviderDetailPage() {
   };
 
   if (message) {
-    return <section className="theme-panel rounded-[28px] p-8 text-slate-700 dark:text-slate-300">{message}</section>;
+    return <section className="theme-panel theme-text-secondary rounded-[28px] p-8">{message}</section>;
   }
 
   if (!provider) {
-    return <section className="theme-panel rounded-[28px] p-8 text-slate-600 dark:text-slate-300">Loading provider detail...</section>;
+    return <section className="theme-panel theme-text-secondary rounded-[28px] p-8">Loading provider detail...</section>;
   }
 
   return (
@@ -79,25 +79,25 @@ export function ProviderDetailPage() {
       <section className="theme-hero rounded-[32px] p-8 lg:p-10">
         <div className="flex flex-col gap-6 xl:flex-row xl:items-start xl:justify-between">
           <div className="max-w-4xl">
-            <div className="mb-4 inline-flex rounded-full border border-black/8 bg-white/80 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
+            <div className="theme-kicker mb-4">
               {provider.serviceArea || 'Service area TBD'}
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <h1 className="text-3xl font-semibold text-slate-900 dark:text-white lg:text-4xl">{provider.displayName}</h1>
-              <span className="theme-card rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{provider.portfolioItems.length} portfolio items</span>
-              <span className="theme-card rounded-full px-3 py-1 text-xs text-slate-600 dark:text-slate-300">{provider.availabilitySlots.length} open slots</span>
+              <h1 className="theme-text-primary text-3xl font-semibold lg:text-4xl">{provider.displayName}</h1>
+              <span className="theme-card theme-text-secondary rounded-full px-3 py-1 text-xs">{provider.portfolioItems.length} portfolio items</span>
+              <span className="theme-card theme-text-secondary rounded-full px-3 py-1 text-xs">{provider.availabilitySlots.length} open slots</span>
             </div>
-            <p className="mt-4 text-lg text-slate-700 dark:text-slate-300">{provider.headline || 'No headline yet.'}</p>
-            <p className="mt-5 max-w-3xl text-sm leading-7 text-slate-600 dark:text-slate-300">{provider.bio || 'No provider bio available yet.'}</p>
+            <p className="theme-text-secondary mt-4 text-lg">{provider.headline || 'No headline yet.'}</p>
+            <p className="theme-text-secondary mt-5 max-w-3xl text-sm leading-7">{provider.bio || 'No provider bio available yet.'}</p>
           </div>
 
-          <div className="theme-panel w-full max-w-sm rounded-3xl bg-white/80 p-5 text-sm text-slate-600 dark:bg-[#171717]/90 dark:text-slate-300">
-            <div className="text-xs uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Pricing</div>
-            <div className="mt-3 text-base font-medium text-slate-900 dark:text-white">{provider.pricingNotes || 'Not specified yet.'}</div>
-            <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">Sign in as a client to reserve an available slot directly from this page.</p>
+          <div className="theme-panel theme-text-secondary w-full max-w-sm rounded-3xl p-5 text-sm">
+            <div className="theme-text-muted text-xs uppercase tracking-[0.18em]">Pricing</div>
+            <div className="theme-text-primary mt-3 text-base font-medium">{provider.pricingNotes || 'Not specified yet.'}</div>
+            <p className="mt-3 text-sm leading-6">Sign in as a client to reserve an available slot directly from this page.</p>
           </div>
         </div>
-        {bookingMessage && <p className="mt-6 text-sm text-slate-700 dark:text-slate-300">{bookingMessage}</p>}
+        {bookingMessage && <p className="theme-text-secondary mt-6 text-sm">{bookingMessage}</p>}
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[minmax(0,1fr),380px]">
@@ -105,29 +105,29 @@ export function ProviderDetailPage() {
           <section className="theme-panel rounded-[28px] p-8">
             <div className="mb-6 flex items-end justify-between gap-4">
               <div>
-                <div className="inline-flex rounded-full bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-500 dark:bg-white/[0.05] dark:text-slate-300">
+                <div className="theme-pill uppercase tracking-[0.18em]">
                   Portfolio
                 </div>
-                <h2 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">Selected work and project highlights</h2>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">Review previous projects before creating a booking request.</p>
+                <h2 className="theme-text-primary mt-4 text-2xl font-semibold">Selected work and project highlights</h2>
+                <p className="theme-text-secondary mt-2 text-sm">Review previous projects before creating a booking request.</p>
               </div>
             </div>
 
             {provider.portfolioItems.length === 0 ? (
               <section className="theme-muted rounded-3xl border-dashed p-8 text-center">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No portfolio items yet</h3>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">This provider has not published portfolio content yet.</p>
+                <h3 className="theme-text-primary text-lg font-semibold">No portfolio items yet</h3>
+                <p className="theme-text-secondary mt-2 text-sm">This provider has not published portfolio content yet.</p>
               </section>
             ) : (
               <div className="grid gap-4 md:grid-cols-2">
                 {provider.portfolioItems.map((item) => (
-                  <article key={item.id} className="theme-card rounded-[28px] p-5 transition hover:-translate-y-0.5 hover:border-black/10 hover:shadow-[0_1px_2px_rgba(15,23,42,0.03),0_16px_32px_rgba(15,23,42,0.05)] dark:hover:border-white/12 dark:hover:shadow-[0_1px_2px_rgba(0,0,0,0.35),0_16px_32px_rgba(0,0,0,0.28)]">
+                  <article key={item.id} className="theme-card theme-card-hover rounded-[28px] p-5 transition hover:-translate-y-0.5">
                     <div className="flex items-start justify-between gap-4">
-                      <strong className="text-lg text-slate-900 dark:text-white">{item.title}</strong>
-                      <span className="theme-muted rounded-full px-2.5 py-1 text-[11px] uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">Item</span>
+                      <strong className="theme-text-primary text-lg">{item.title}</strong>
+                      <span className="theme-muted theme-text-muted rounded-full px-2.5 py-1 text-[11px] uppercase tracking-[0.18em]">Item</span>
                     </div>
-                    <p className="mt-3 text-sm leading-6 text-slate-600 dark:text-slate-300">{item.description || 'No portfolio description yet.'}</p>
-                    <div className="mt-5 grid gap-2 text-xs text-slate-500 dark:text-slate-400">
+                    <p className="theme-text-secondary mt-3 text-sm leading-6">{item.description || 'No portfolio description yet.'}</p>
+                    <div className="theme-text-muted mt-5 grid gap-2 text-xs">
                       <div>Preview: {item.imageUrl || 'N/A'}</div>
                       <div>External link: {item.externalUrl || 'N/A'}</div>
                     </div>
@@ -139,25 +139,25 @@ export function ProviderDetailPage() {
         </div>
 
         <aside className="theme-panel rounded-[28px] p-8 xl:sticky xl:top-24 xl:h-fit">
-          <div className="inline-flex rounded-full border border-black/8 bg-black/[0.03] px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-slate-600 dark:border-white/10 dark:bg-white/[0.05] dark:text-slate-300">
+          <div className="theme-kicker">
             Availability
           </div>
-          <h2 className="mt-4 text-2xl font-semibold text-slate-900 dark:text-white">Available booking slots</h2>
-          <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-300">Choose an open slot and create a booking request directly from this page.</p>
+          <h2 className="theme-text-primary mt-4 text-2xl font-semibold">Available booking slots</h2>
+          <p className="theme-text-secondary mt-2 text-sm leading-6">Choose an open slot and create a booking request directly from this page.</p>
 
           <div className="mt-6 grid gap-4">
             {provider.availabilitySlots.length === 0 ? (
               <section className="theme-muted rounded-3xl border-dashed p-8 text-center">
-                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">No open slots</h3>
-                <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">This provider does not have any future availability published right now.</p>
+                <h3 className="theme-text-primary text-lg font-semibold">No open slots</h3>
+                <p className="theme-text-secondary mt-2 text-sm">This provider does not have any future availability published right now.</p>
               </section>
             ) : (
               provider.availabilitySlots.map((slot) => (
                 <article key={slot.id} className="theme-card rounded-[28px] p-5">
-                  <div className="text-base font-semibold text-slate-900 dark:text-white">{formatDateTime(slot.startAt)}</div>
-                  <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">End: {formatDateTime(slot.endAt)}</div>
-                  <div className="mt-1 text-sm text-slate-500 dark:text-slate-400">Time zone: {slot.timeZone}</div>
-                  <button className="mt-5 w-full rounded-2xl bg-slate-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-200" type="button" onClick={() => createBooking(slot.id)}>
+                  <div className="theme-text-primary text-base font-semibold">{formatDateTime(slot.startAt)}</div>
+                  <div className="theme-text-secondary mt-1 text-sm">End: {formatDateTime(slot.endAt)}</div>
+                  <div className="theme-text-muted mt-1 text-sm">Time zone: {slot.timeZone}</div>
+                  <button className="theme-button-primary mt-5 w-full" type="button" onClick={() => createBooking(slot.id)}>
                     Book this slot
                   </button>
                 </article>
